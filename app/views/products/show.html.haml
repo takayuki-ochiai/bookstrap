@@ -1,0 +1,18 @@
+= provide :title, @product.title
+.row
+  %aside.span4
+    %p test
+  .span8
+    %p 投稿内容
+    = @product.title
+    = @product.genre
+    = @product.link
+    / = render "shared/micropost_form" if signed_in?
+    - if @product.microposts.any?
+      %h3
+        Microposts
+        = @product.microposts.count
+      %ol.microposts
+        = render @microposts
+      = will_paginate @microposts
+    = render "products/micropost_form" if signed_in?

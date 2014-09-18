@@ -1,0 +1,2 @@
+$(".likes_form","li##{@micropost.id}").html("#{escape_javascript render 'microposts/ajax_likes'}");
+$(".likes","li##{@micropost.id}").html('#{@likes_num} いいね!');

@@ -1,0 +1,3 @@
+= form_tag({ controller: :micropost, action: :dislikes }, method: :delete ) do
+  %div= hidden_field @micropost, value: micropost.id
+  = submit "いいね！を取り消す", class: "btn btn-large btn-primary"

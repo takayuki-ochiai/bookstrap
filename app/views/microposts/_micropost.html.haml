@@ -1,0 +1,17 @@
+%li{id: feed_item.id}
+  %span.content<
+    = feed_item.content
+  %span.timestamp<
+    Posted
+    = time_ago_in_words(feed_item.created_at)
+    ago
+  = delete_item(feed_item)
+  - unless current_user?(feed_item.user)
+    #likes_form
+      - if current_user.liked?(feed_item)
+        = render partial: "microposts/dislikes", locals: { feed_item: feed_item }
+      - else
+        = render partial: "microposts/likes", locals: { feed_item: feed_item }
+  = "#{feed_item.reputation_for(:likes).to_i} いいね！"
+  / - if current_user?(micropost.user)
+  /   = link_to "delete",micropost, method: :delete,data: {confirm:"You sure?"}, title: micropost.content

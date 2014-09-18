@@ -1,0 +1,29 @@
+= provide :title, "SignUp"
+%h1 signup
+%p 登録ページ
+.row
+  %div.span6.offset3
+    = form_for(@user) do |f|
+      = render "shared/error_messages", object: f.object
+
+      = f.label :userid
+      = f.text_field :userid
+
+      = f.label :password
+      = f.text_field :password
+
+      = f.label :password_confirmation, "Confirmation"
+      = f.text_field :password_confirmation
+
+      = f.label :nickname
+      = f.text_field :nickname
+
+      = f.label :favorite_genre
+      = f.text_field :favorite_genre
+
+
+      = f.label :email
+      = f.text_field :email
+
+      = f.submit "Create my account"
+

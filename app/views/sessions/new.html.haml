@@ -1,0 +1,13 @@
+= provide :title, "SignIn"
+%h1 SignIn
+.row
+  %div.span6.offset3
+    = form_for(:session, url: sessions_path) do |f|
+      = f.label :userid
+      = f.text_field :userid
+      = f.label :password
+      = f.text_field :password
+      = f.submit "Sign in", class:"btn btn-large btn-prymary"
+    %p 新規登録はこちらから!
+    = link_to "Sign up now!", signup_path
+    = link_to "戻る", root_path

@@ -1,0 +1,2 @@
+= form_tag(dislikes_micropost_path(@micropost.id), method: :delete,remote: true) do
+  = submit_tag "いいね！を取り消す", class: "btn btn-large btn-primary"

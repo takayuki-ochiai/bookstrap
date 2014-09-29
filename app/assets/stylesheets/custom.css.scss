@@ -1,5 +1,5 @@
 @import "bootstrap";
-
+$lightGray: #999;
 /* universal */
 
 html {
@@ -26,46 +26,53 @@ textarea {
   margin-bottom: 10px;
 }
 
+
+/* header */
+.navbar-default-white {
+  @extend .navbar-default !optional;
+  background-color: white;
+  border-color: #5bc0de;
+}
+
 /* users index */
 
 .users {
-  list-style: none;
   margin: 0;
   li {
     overflow: auto;
     padding: 10px 0;
-    border-top: 1px solid $grayLighter;
+    border-top: 1px solid $gray-lighter;
+    list-style: none;
     &:last-child {
-      border-bottom: 1px solid $grayLighter;
+      border-bottom: 1px solid $gray-lighter;
     }
   }
 }
 
 .microposts {
-  list-style: none;
   margin: 10px 0 0 0;
 
   li {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
+    list-style: none;
+    margin-left: 0px;
   }
 }
+
 .content {
   display: block;
 }
+
 .timestamp {
-  color: $grayLight;
+  color: $gray-light;
 }
+
 .gravatar {
   float: left;
   margin-right: 10px;
 }
-aside {
-  textarea {
-    height: 100px;
-    margin-bottom: 5px;
-  }
-}
+
 
 /* sidebar */
 .stats {
@@ -73,7 +80,7 @@ aside {
   a {
     float: left;
     padding: 0 10px;
-    border-left: 1px solid $grayLighter;
+    border-left: 1px solid $gray-lighter;
     color: gray;
     &:first-child {
       padding-left: 0;
@@ -81,7 +88,7 @@ aside {
     }
     &:hover {
       text-decoration: none;
-      color: $blue;
+      color: blue;
     }
   }
   strong {
@@ -96,3 +103,56 @@ aside {
     margin: 1px 1px;
   }
 }
+
+section{
+  .btn.btn-lg{
+    @extend .btn-default !optional;
+    text-align: left;
+    width: 240px;
+    border-radius: 0px;
+    a {
+      color: black;
+      text-decoration: none;
+      font-size: 15px;
+    }
+  }
+  h4{
+    p{
+      display: inline-block;
+    }
+  }
+  ul {
+    list-style: none;
+    padding-left: 0px;
+    display: table;
+    li a{
+      color: black;
+    }
+  }
+}
+
+/* forms */
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+}
+
+/* テスト用 */
+.col-md-3{
+  background-color: $gray-light;
+}
+
+.col-md-6{
+  background-color: blue;
+}
+
+
+

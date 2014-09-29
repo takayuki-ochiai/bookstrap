@@ -17,32 +17,6 @@ describe "micropost_pages" do
     end
   end
 
-  context "post Micropost" do
-    before { visit product_path(product)}
-    it { should have_title("#{product.title}")}
-    it { should have_content("投稿内容")}
-
-    describe "validation of micropost from product_view_page" do
-      context "micropost is invalid" do
-        it "is invalid without content " do
-          expect { click_button "投稿する" }.not_to change(Micropost, :count)
-        end
-      end
-
-      describe "render error message " do
-        before {click_button "投稿する"}
-        it { should have_content('error') }
-      end
-
-      describe"micropost is valid" do
-        before { fill_in "レビュー投稿", with: "イケてるエンジニアになるぞー！"}
-        it "is valid micropost content" do
-          expect { click_button "投稿する" }.to change(Micropost, :count)
-        end
-      end
-    end
-  end
-
   #TODO: activerecord reputationで適用できるテストの作成
   describe "good toggle buttons " do
     context "visit root path" do

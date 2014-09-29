@@ -21,12 +21,16 @@ Labohp::Application.routes.draw do
     end
   end
   resources :relationships, only: [:create, :destroy]
+  
   resources :products do
     collection do
-      get :original, :game, :comicanime, :noveldramamovie,
-          :questionnaire, :history, :tokusatsu, :knowledge,
-          :job, :music, :sports, :religionmyth, :gourmet,
-          :shortnotice, :rating, :others
+      get :literature, :love, :history, :mystery, :fantasy, :sf,
+          :horror, :comedy, :adventure, :academy, :millitary,
+          :fairy_tail, :poem, :essay, :replay, :others,:search_product
+    end
+    
+    member do
+      get :create_micropost
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

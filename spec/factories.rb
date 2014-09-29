@@ -39,9 +39,9 @@ FactoryGirl.define do
     end
     sequence(:genre) do |n| 
       if n%2==0
-        "オリジナル"
+        "文学"
       else
-        "安価"
+        "恋愛"
       end
     end
     sequence(:link) { |n| "http://www.yahoo.co.jp/21#{n}" }

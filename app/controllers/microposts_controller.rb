@@ -11,8 +11,8 @@ class MicropostsController < ApplicationController
       flash[:success] = "Micropost created!"
       redirect_to root_url
     else
-      @feed_items = []
-      render 'main_pages/home'
+      flash[:failure] = "Micropost created error!"
+      redirect_to root_url
     end
   end
 
@@ -63,5 +63,10 @@ class MicropostsController < ApplicationController
     #TODO: いいね用のparamsを作ってbeforeactionする必要あり？
     def set_micropost
       @micropost = Micropost.find(params[:id])
+    end
+
+    def set_product
+      @product = Product.find(params[:id])
+      @microposts = @product.microposts.paginate(page: params[:page])
     end
 end

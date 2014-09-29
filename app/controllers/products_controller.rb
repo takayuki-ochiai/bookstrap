@@ -1,8 +1,8 @@
 class ProductsController < ApplicationController
 
-  before_action :signed_in_user, only: [:index, :new, :create, :edit, :update, :destroy]
+  before_action :signed_in_user, only: [:index, :new, :create, :edit, :update, :destroy, :create_micropost]
   before_action :admin_user, only: [:destroy, :edit, :update]
-  before_action :set_product, only: [:show, :edit, :update]
+  before_action :set_product, only: [:show, :edit, :update, :create_micropost]
 
 
   #ransackを使って作品を検索した後、ページネーションを使用
@@ -12,6 +12,13 @@ class ProductsController < ApplicationController
     #@products = Product.search(params[:search])
   end
 
+  def search_product
+    @search = Product.search(params[:q])#search_formから値を取得
+    @products = @search.result.paginate(page: params[:page])
+  end
+
+  #micropost投稿用の空の器を作成し@micropostに
+  #TODO: current_user.microposts.buildはわかりにくいので直す
   def show
     @micropost = current_user.microposts.build if signed_in?
   end
@@ -51,66 +58,71 @@ class ProductsController < ApplicationController
     redirect_to products_url
   end
 
+  #マイクロポスト投稿機能
+  def create_micropost
+    @micropost = current_user.microposts.build if signed_in?
+  end
+
   #ジャンル別で表示する機能
   # TODO :ジャンル別表示のMVCがなんか冗長だからうまいやりかたを考えること
-  def original
-    genre_search("オリジナル")
+  def literature
+    genre_search("文学")
   end
 
-  def game
-    genre_search("ゲーム")
-  end
-
-  def comicanime
-    genre_search("漫画・アニメ")
-  end
-
-  def noveldramamovie
-    genre_search("小説・ドラマ・映画原作")
-  end
-
-  def questionnaire
-    genre_search("安価")
+  def love
+    genre_search("恋愛")
   end
 
   def history
     genre_search("歴史")
   end
 
-  def tokusatsu
-    genre_search("特撮")
+  def mystery
+    genre_search("推理")
   end
 
-  def knowledge
-    genre_search("知識")
+  def fantasy
+    genre_search("ファンタジー")
   end
 
-  def job
-    genre_search("職業")
+  def sf
+    genre_search("SF")
   end
 
-  def music
-    genre_search("音楽")
+  def horror
+    genre_search("ホラー")
   end
 
-  def sports
-    genre_search("スポーツ")
+  def comedy
+    genre_search("コメディ")
   end
 
-  def religionmyth
-    genre_search("宗教・神話")
+  def adventure
+    genre_search("冒険")
   end
 
-  def gourmet
-    genre_search("グルメ")
+  def academy
+    genre_search("学園")
   end
 
-  def shortnotice
-    genre_search("短編・予告")
+  def millitary
+    genre_search("戦記")
   end
 
-  def rating
-    genre_search("【R-18/R-15】")
+  def fairy_tail
+    genre_search("童話")
+  end
+
+  def poem
+    genre_search("詩")
+  end
+
+  def essay
+    genre_search("エッセイ")
+  end
+
+  def replay
+    genre_search("リプレイ")
   end
 
   def others

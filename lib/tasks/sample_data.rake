@@ -42,7 +42,40 @@ end
 def make_products
   60.times do |n|
     title = "やる夫は~#{n+1}"
-    genre = "学ぶ系"
+    case n/16
+      when 1
+        genre = "文学"
+      when 2
+        genre = "恋愛"
+      when 3
+        genre = "歴史"
+      when 4
+        genre = "推理"
+      when 5
+        genre = "ファンタジー"
+      when 6
+        genre = "SF"
+      when 7
+        genre = "ホラー"
+      when 8
+        genre = "コメディ"
+      when 9
+        genre = "冒険"
+      when 10
+        genre = "学園"
+      when 11
+        genre = "戦記"
+      when 12
+        genre = "童話"
+      when 13
+        genre = "詩"
+      when 14
+        genre = "エッセイ"
+      when 15
+        genre = "リプレイ"
+      when 0
+        genre = "その他"
+    end
     link = "http://www.yahoo.co.jp/#{n+1}"
     Product.create!(title:title, genre: genre, link: link)
   end

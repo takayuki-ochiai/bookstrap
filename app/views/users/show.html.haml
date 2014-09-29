@@ -1,18 +1,15 @@
 = provide :title, @user.nickname
-.row
-  %aside.span4
-    %section
-      %h1
-        = gravatar_for @user
-        = @user.nickname
-    %section
-      = render "shared/stats"
-  .span8
-    = render "follow_form" if signed_in?
-    - if @user.microposts.any?
-      %h3
-        Microposts
-        = @user.microposts.count
-      %ol.feed_items
-        = render "shared/feed"
-      = will_paginate @feed_items
+
+%section
+  %h1
+    = gravatar_for @user
+    = @user.nickname
+%section
+  = render "shared/stats"
+= render "follow_form" if signed_in?
+- if @user.microposts.any?
+  %h3
+    Microposts
+    = @user.microposts.count
+  %ol.feed_items
+    = render "shared/feed"

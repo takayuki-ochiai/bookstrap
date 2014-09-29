@@ -14,4 +14,8 @@ class Micropost < ActiveRecord::Base
     where("user_id IN (:followed_user_ids) OR user_id = :user_id",
           followed_user_ids: followed_user_ids, user_id: user)
   end
+
+  def current_feed
+    self.limit(10)
+  end
 end

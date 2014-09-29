@@ -13,6 +13,20 @@ describe "HomePages" do
     it { should have_title("Index") }
   end
 
+
+  context "user is not signin"do
+    before do
+      before(:all) {100.times { create(:micropost) } }
+      after(:all) { Micropost.delete_all }
+    end
+
+    it "should render recently feed" do
+      feed.each do |item|
+        expect(page).to have_selector("li##{item.id}", text: item.content)
+      end
+    end
+  end
+
   context "user is signin" do
     before do
       user.microposts.create(content: "test", product_id: product.id)
@@ -47,6 +61,13 @@ describe "HomePages" do
           expect(page).to have_selector('li', text: user.nickname)
         end
       end
+    end
+
+    #指定された文字を入れたボタンを持っているか。リンクは別途確認すること
+    describe "user_nav" do
+      it { should have_link("感想の投稿はこちら", search_product_products_path) }
+      it { should have_link("ユーザー情報の管理はこちら"), edit_user_path(user) }
+      it { should have_link("投稿内容の管理はこちら"), user_path(user)}
     end
   end
 end

@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title= "test#{yield(:title)}"
+    %title= "Bookstrap:#{yield(:title)}"
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
@@ -11,4 +11,21 @@
       - flash.each do |key, value|
         %div(class="alert alert-#{key}")
           = value
-      = yield
+      .row
+        - if signed_in?
+          %aside.col-md-3.col-md-push-2
+            %section
+              = render "shared/user_info"
+            %section
+              = render "shared/user_actions"
+            %section
+              = render "shared/stats"
+            %section
+              = render "shared/genre_links"
+          .col-md-6.col-md-push-2
+            = yield
+        - else
+          %aside.col-md-2.col-md-push-1
+            = render "shared/genre_links"
+          .col-md-8.col-md-push-1
+            = yield

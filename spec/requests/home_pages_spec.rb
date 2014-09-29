@@ -5,26 +5,18 @@ describe "HomePages" do
   let(:user){ create(:user) }
   let(:product) { create(:product) }
   let(:product2) { create(:product) }
-  let(:micropost) { user.microposts.build(content: "test", product_id: product.id) }
-
-
   context "visit home page" do
     before { visit root_path }
     it { should have_title("Index") }
   end
 
-
+  #TODO: 作ったマイクロポスト一つ、なおかつセレクタの確認もできていないので直す
   context "user is not signin"do
     before do
-      before(:all) {100.times { create(:micropost) } }
-      after(:all) { Micropost.delete_all }
+      user.microposts.create(content: "test", product_id: product.id)
+      visit root_path
     end
-
-    it "should render recently feed" do
-      feed.each do |item|
-        expect(page).to have_selector("li##{item.id}", text: item.content)
-      end
-    end
+    it { should have_content("test")}
   end
 
   context "user is signin" do

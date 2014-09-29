@@ -1,0 +1,12 @@
+%section
+  .btn.btn-lg
+    %i.glyphicon.glyphicon-pencil
+    = link_to "感想の投稿はこちら", search_product_products_path
+%section
+  .btn.btn-lg
+    %i.glyphicon.glyphicon-user
+    = link_to "ユーザー情報の管理はこちら", edit_user_path(current_user)
+%section
+  .btn.btn-lg
+    %i.glyphicon.glyphicon-edit
+    = link_to "投稿内容の管理はこちら", user_path(current_user)

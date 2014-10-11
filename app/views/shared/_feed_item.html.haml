@@ -1,14 +1,25 @@
-%li{id: feed_item.id}
-  = link_to gravatar_for(feed_item.user), feed_item.user
-  %span.user
-    = link_to feed_item.user.nickname, feed_item.user
-  %span.product
-    = feed_item.product.title
-  %span.content= wrap(feed_item.content)
-  %span.timestamp
-    Posted #{time_ago_in_words(feed_item.created_at)} ago.
-  = delete_item(feed_item)  
-  = render partial: "microposts/likes_form", locals: {feed_item: feed_item }
-  .likes
-    = "#{feed_item.reputation_for(:likes).to_i} いいね！"
+/ li要素はajaxに関連しているので削除しないこと
+%li.feed_item{id: feed_item.id}
+  .row
+    .left_content.col-md-2
+      .user
+        = link_to gravatar_for(feed_item.user), feed_item.user
+      .nick_name
+        = link_to feed_item.user.nickname, feed_item.user
+      .timestamp
+        Posted #{time_ago_in_words(feed_item.created_at)} ago.
+    .right_content.col-md-9
+      .product
+        %p=link_to "#{feed_item.product.title}(#{feed_item.product.genre})", product_path(feed_item.product.id)
+      .content
+        = wrap(feed_item.content)
+      %span.likes_block
+        = render partial: "microposts/likes_form", locals: {feed_item: feed_item }
+        %span.likes{ id: feed_item.id }
+          = "#{feed_item.reputation_for(:likes).to_i} いいね！"
+      %span.delete_block
+        - unless current_user == nil
+          -if current_user == feed_item.user || current_user.admin?
+            =link_to "投稿を削除", micropost_path(feed_item.id), method: :delete, data: { confirm: "本当に削除してもよろしいですか？" }
+
 

@@ -1,8 +1,9 @@
-%a{href: user_path(current_user)}
-  = gravatar_for current_user
-%h1
-  = current_user.nickname
-%span
-  = link_to "view my profile", current_user
-%span
-  = pluralize(current_user.microposts.count, "micropost")
+%ul
+  %li
+    %a{href: user_path(current_user)}
+    = gravatar_for current_user
+  %li
+    %h5
+      = current_user.nickname
+      =render "shared/current_user_stats"
+

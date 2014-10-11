@@ -1,29 +1,35 @@
 = provide :title, "SignUp"
-%h1 signup
-%p 登録ページ
-.row
-  %div.span6.offset3
+
+.row#signup_page
+  .title
+    %h3 新規登録
+  .signup_form
     = form_for(@user) do |f|
       = render "shared/error_messages", object: f.object
+      %table
+        %tr
+          %th
+            = f.label :userid, "ユーザーID"
+          %td
+            = f.text_field :userid
+            %p ※20文字以下
+        %tr
+          %th
+            = f.label :nickname, "ニックネーム"
+          %td
+            = f.text_field :nickname
+            %p ※一度登録したニックネームの変更はできません
+        %tr
+          %th#password-first
+            = f.label :password, "パスワード"
+          %td
+            = f.text_field :password
+            %p ※6文字以上,30文字以下
+        %tr
+          %th#password-confirmation
+            = f.label :password_confirmation, "パスワード（確認）"
+          %td
+            = f.text_field :password_confirmation
 
-      = f.label :userid
-      = f.text_field :userid
-
-      = f.label :password
-      = f.text_field :password
-
-      = f.label :password_confirmation, "Confirmation"
-      = f.text_field :password_confirmation
-
-      = f.label :nickname
-      = f.text_field :nickname
-
-      = f.label :favorite_genre
-      = f.text_field :favorite_genre
-
-
-      = f.label :email
-      = f.text_field :email
-
-      = f.submit "Create my account"
+      = f.submit "登録する", class: "btn btn-success"
 

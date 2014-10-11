@@ -1,15 +1,15 @@
 = provide :title, @user.nickname
 
-%section
-  %h1
+#users_show_page
+  .profile
     = gravatar_for @user
-    = @user.nickname
-%section
-  = render "shared/stats"
-= render "follow_form" if signed_in?
+    %p
+      = @user.nickname
+    = render "shared/stats"
+  = render "follow_form" if signed_in?
 - if @user.microposts.any?
   %h3
-    Microposts
-    = @user.microposts.count
+    #{@user.nickname}さんの投稿 : #{@feed_items.count}件
   %ol.feed_items
+    = will_paginate @feed_items, :renderer => BootstrapPagination::Rails
     = render "shared/feed"

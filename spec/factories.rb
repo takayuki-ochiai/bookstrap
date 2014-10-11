@@ -3,7 +3,7 @@ FactoryGirl.define do
   factory :user do
     sequence(:userid){ |n| "takayuki ochiai#{n}"}
     sequence(:email){ |n| "gogooti#{n}@gmail.com"}
-    nickname "OTI"
+    sequence(:nickname){ |n| "OTI#{n}"}
     favorite_genre "やる夫スレ"
     sequence(:password) { |n|"suidenOTI#{n}" }
     sequence(:password_confirmation) { |n| "suidenOTI#{n}" }

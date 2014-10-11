@@ -1,29 +1,39 @@
-- provide :title, "Edit user"
-%h1 Update your profile
-
-.row
-  .span6.offset3
+- provide :title, "ユーザー情報の管理"
+.row#edit_user_page
+  %p ユーザー設定変更(※登録したニックネームを変更することはできません)
+  .edit_user_form
     = form_for(@user) do |f|
       = render 'shared/error_messages', object: f.object
-
-      = f.label :userid
-      = f.text_field :userid
-
-      = f.label :email
-      = f.text_field :email
-
-      = f.label :nickname
-      = f.text_field :nickname
-
-      = f.label :favorite_genre
-      = f.text_field :favorite_genre
-
-      = f.label :password
-      = f.password_field :password
-      = f.label :password_confirmation, "Confirm Password"
-      = f.password_field :password_confirmation
-
-      = f.submit "Save changes", class: "btn btn-large btn-primary"
-
-    = gravatar_for(@user)
-    %a{href: "http://gravatar.com/emails"} change
+      %table
+        %tr
+          %th
+            = f.label :userid, "ユーザーID"
+          %td
+            = f.text_field :userid
+        / %tr
+        /   %th
+        /     = f.label :email
+        /   %td
+        /     = f.text_field :email
+        / %tr
+        /   %th
+        /     = f.label :favorite_genre
+        /   %td
+        /     = f.text_field :favorite_genre
+        %tr
+          %th#password-first
+            = f.label :password, "新パスワード"
+          %td
+            = f.password_field :password
+        %tr
+          %th#password-confirmation
+            = f.label :password_confirmation, "新パスワード（確認）"
+          %td
+            = f.password_field :password_confirmation
+        %tr
+          %th
+            プロフィール画像の変更
+          %td
+            = gravatar_for(@user)
+            %a{href: "http://gravatar.com/emails"} プロフィール画像を編集する
+      = f.submit "編集する", class: "btn btn-lg btn-primary"

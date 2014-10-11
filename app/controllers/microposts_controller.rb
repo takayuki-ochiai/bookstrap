@@ -1,7 +1,8 @@
 class MicropostsController < ApplicationController
-  before_action :signed_in_user, only: [:create, :destroy, :likes, :dislikes]
-  before_action :correct_user, only: :destroy
-  before_action :set_micropost, only: [:likes, :dislikes]
+  before_action :signed_in_user, only: [:create, :edit, :destroy, :likes, :dislikes]
+  before_action :correct_user, only: [:edit, :destroy]
+  before_action :set_micropost, only: [:edit, :update, :likes, :dislikes]
+
   def index
   end
 
@@ -13,6 +14,21 @@ class MicropostsController < ApplicationController
     else
       flash[:failure] = "Micropost created error!"
       redirect_to root_url
+    end
+  end
+
+  def edit
+    @product = @micropost.product
+  end
+
+  def update
+
+    if @micropost.update_attributes(micropost_params)
+      flash[:success] = "投稿の編集が完了しました"
+      redirect_to root_url
+    else
+      @product = @micropost.product
+      render "edit"
     end
   end
 
@@ -56,9 +72,12 @@ class MicropostsController < ApplicationController
       params.require(:micropost).permit(:content, :product_id, :user_id)
     end
 
+    #投稿作成者かadminである場合、削除が可能になる
     def correct_user
-      @micropost = current_user.microposts.find_by(id: params[:id])
-      redirect_to root_url if @micropost.nil?
+      @micropost = Micropost.find_by(id: params[:id])
+      unless current_user.admin? || current_user?(@micropost.user)
+        redirect_to root_path
+      end
     end
     #TODO: いいね用のparamsを作ってbeforeactionする必要あり？
     def set_micropost

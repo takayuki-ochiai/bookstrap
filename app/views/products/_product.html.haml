@@ -1,6 +1,39 @@
 %li
-  = link_to product.title, product
-  = product.genre
-  - if current_user.admin?
-    = link_to "delete", product, method: :delete, data: {confirm: "You sure?" }
-    = link_to "edit", edit_product_path(product.id)
+  / 最新のマイクロポスト一件の内容,投稿者ニックネームを表示
+  - if product.microposts.any?
+    = product.microposts.each do |feed_item|
+      %ol.microposts#product_index
+        %li.feed_item{id: feed_item.id}
+          .row
+            .left_content.col-md-2
+              .user
+                = link_to gravatar_for(feed_item.user), feed_item.user
+              .nick_name
+                = link_to feed_item.user.nickname, feed_item.user
+              .timestamp
+                Posted #{time_ago_in_words(feed_item.created_at)} ago.
+            .right_content.col-md-9
+              .product
+                %p=link_to "#{feed_item.product.title}(#{feed_item.product.genre})", product_path(feed_item.product.id)
+                =link_to "この作品の感想を投稿",create_micropost_product_path(feed_item.product.id), class: "btn btn-primary btn-xs"
+              .content
+                = wrap(feed_item.content)
+              %span.likes_block
+                = render partial: "microposts/likes_form", locals: {feed_item: feed_item }
+                %span.likes{ id: feed_item.id }
+                  = "#{feed_item.reputation_for(:likes).to_i} いいね！"
+              %span.delete_block
+                - unless current_user == nil
+                  -if current_user == feed_item.user || current_user.admin?
+                    =link_to "投稿を削除", micropost_path(feed_item.id), method: :delete, data: { confirm: "本当に削除してもよろしいですか？" }
+      - break
+  - else
+    .micropost
+      %p=link_to "#{product.title}(#{product.genre})", product_path(product.id)
+      %p この作品への感想の投稿はまだありません
+      - unless current_user == nil
+        =link_to "この作品の感想を投稿",create_micropost_product_path(product.id), class: "btn btn-primary btn-xs"
+  - unless current_user == nil
+    - if current_user.admin?
+      = link_to "delete", product, method: :delete, data: {confirm: "この作品を本当に削除してもよろしいですか？" }
+      = link_to "edit", edit_product_path(product.id)

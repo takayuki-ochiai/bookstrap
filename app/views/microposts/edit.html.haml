@@ -1,0 +1,22 @@
+- provide :title, "感想を編集する"
+#create_micropost_page
+  %h3="#{@product.title}の感想を編集"
+  = form_for @micropost do |f|
+    = render "shared/error_messages", object: f.object
+    .field
+      %table
+        %tr.title
+          %th.title
+            作品名
+          %td.title
+            %h4 
+            = @product.title
+        %tr.content
+          %th
+            = f.label :content, "投稿内容"
+          %td
+            = f.text_area :content, :size => "50x7"
+            %p ※400字以内
+      = f.hidden_field :product_id, value: @product.id
+      = f.hidden_field :user_id, value: current_user.id
+      = f.submit "編集する", class: "btn btn-large btn-primary"

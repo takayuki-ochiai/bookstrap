@@ -1,4 +1,8 @@
 - provide(:title, '登録作品の一覧')
-
-= render "products/search_form"
-= render "products/product_index"
+#product_index_page
+  = render "products/search_form"
+  = button_to new_product_path, method: :get, class: "btn btn-default new_product_link" do
+    %i.glyphicon.glyphicon-plus-sign
+    新しく作品を登録する
+  .index
+    = render "products/product_index"

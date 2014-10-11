@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
                                    class_name:  "Relationship",
                                    dependent:   :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
-  before_save { self.email = email.downcase }
+  #email関連の登録機能はコメントアウト中
+  #before_save { self.email = email.downcase }
   before_save { self.userid = userid.downcase }
   before_create :create_remember_token
 
@@ -15,20 +16,29 @@ class User < ActiveRecord::Base
   validates :userid,
     presence: true,
     uniqueness: {case_sensitive: true},
-    length: {in: 6..20}
+    length: {in: 1..20}
 
 
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+=begin
   validates :email,
-    presence: true,
-    uniqueness: {case_sensitive: true },
+    #presence: true,
+    #uniqueness: {case_sensitive: true },
     length: { maximum:50 },
     format: { with: VALID_EMAIL_REGEX }
+=end
+
+  validates :nickname,
+    presence: true,
+    uniqueness: {case_sensitive: true },
+    length: { maximum:20 }
+
 
     has_secure_password
     validates :password,
-      length:{ minimum:6 }
+      length:{ minimum:6 , maximum:30 }
+
     has_many :evaluations, class_name: "ReputationSystem::Evaluation", as: :source
 
   def User.new_remember_token

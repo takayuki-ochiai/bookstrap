@@ -1,9 +1,15 @@
+= render "shared/home_notice"
 
-= render "shared/feed"
-%h1 Welcome to the Sample App
-%h2
-  This is the home page for the
-  %a{href: "http://railstutorial.jp/"} Ruby on Rails Tutorialsample application
+#recent_micropost
+  %h4 
+    %ul
+      %li
+        %i.glyphicon.glyphicon-book
+      %li
+        %p 最近投稿された感想
 
-= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" 
+  = render "shared/feed"
+  = will_paginate @feed_items, :renderer => BootstrapPagination::Rails
+
+
 

@@ -7,30 +7,54 @@ describe "User pages" do
   let(:product){ create(:product) }
   let(:product2){ create(:product) }
 
+  #link text
+  let(:delete_link){ "アカウント削除" }
+
+  #header_link
+  let(:logout){ "ログアウト" }
+
+  #form_label
+  let(:userid){"ユーザーID"}
+  let(:nickname){"ニックネーム"}
+  let(:password){"パスワード"}
+  let(:password_confirmation){"パスワード（確認）"}
+
+  #form_label(edit)
+  let(:new_password){"新パスワード"}
+  let(:new_password_confirmation){"新パスワード（確認）"}
+  
   describe "visit user index" do
     before do
       sign_in user
       visit users_path
     end
 
-    it { should have_title('All users') }
-    it { should have_content('All users') }
+    it { should have_title('ユーザー一覧') }
 
     describe "pagenation" do
       before(:all) {30.times { create(:user) } }
       after(:all) { User.delete_all }
-      #ページネーションタグが作られているか?
-      it { should have_selector("div.pagination") }
+    end
 
-      it "should render 30 microposts" do
-        Micropost.paginate(page: 1).each do |micropost|
-          expect(page).to have_selector('li', text: user.nickname)
+    describe "search function" do
+      let(:search){ "検索" }
+      before(:all){ 30.times{ create(:user) } }
+      after(:all){ User.delete_all }
+      context "title search" do
+        before do 
+          fill_in "ユーザー名で検索", with: "OTI2"
+          click_button search
         end
+
+
+
+        it { should have_selector("ol.user_item li div div a", text: "OTI2") }
+        it { should_not have_selector("ol.user_item li div div a", text: "OTI4" ) }
       end
     end
 
     describe "delete link" do
-      it { should_not have_link('delete') }
+      it { should_not have_link(delete_link) }
       context "signin as the admin user" do
         let(:admin) { create(:admin) }
         before do
@@ -38,15 +62,15 @@ describe "User pages" do
           visit users_path
         end
 
-        it { should have_link('delete', href: user_path(User.first)) }
+        it { should have_link(delete_link, href: user_path(User.first)) }
 
         it "should delete other user account" do
           expect do
-            click_link('delete', match: :first)
+            click_link(delete_link, match: :first)
           end.to change(User, :count).by(-1)
         end
 
-        it { should_not have_link('delete', href: user_path(admin)) }
+        it { should_not have_link(delete_link, href: user_path(admin)) }
       end
     end
   end
@@ -121,8 +145,7 @@ describe "User pages" do
   describe "signup" do
     before { visit signup_path }
 
-    let(:submit) { "Create my account" }
-    it {should have_content("signup")}
+    let(:submit) { "登録する" }
 
     describe "visit signup page" do
       it { should have_title("SignUp")}
@@ -146,12 +169,10 @@ describe "User pages" do
 
     context "with valid information" do
       before do
-        fill_in "Userid",         with: "Example User"
-        fill_in "Email",        with: "user@example.com"
-        fill_in "Password",     with: "noukoudaigaku"
-        fill_in "Confirmation", with: "noukoudaigaku"
-        fill_in "Nickname", with: "suidenOTI"
-        fill_in "Favorite genre", with: "やる夫スレ"
+        fill_in userid,         with: "Example User"
+        fill_in nickname,         with: "OTI"
+        fill_in "パスワード",          with: "noukoudaigaku"
+        fill_in "パスワード（確認）",     with: "noukoudaigaku"
       end
 
       it "should create a user" do
@@ -160,9 +181,9 @@ describe "User pages" do
 
       context "after saving the user" do
         before { click_button submit }
-        let(:user) { User.find_by(userid: 'example user') }
+        let(:user) { User.find_by(nickname: 'OTI') }
 
-        it { should have_link("Sign out", href:signout_path) }
+        it { should have_link(logout, href:signout_path) }
         it { should have_title(user.nickname) }
         it { should have_selector('div.alert.alert-success', text: 'Welcome') }
       end
@@ -176,30 +197,25 @@ describe "User pages" do
     end
 
     describe "visit edit page" do
-      it { should have_content("Update your profile") }
-      it { should have_title("Edit user")}
+      it { should have_title("ユーザー情報の管理")}
     end
 
 
     context "valid user data" do
       let(:new_userid){ "testtesttest" }
-      let(:new_email){ "new@gmail.com" }
       before do
-        fill_in "Userid", with: new_userid
-        fill_in "Email", with: new_email
-        fill_in "Password", with: user.password
-        fill_in "Confirm Password", with: user.password
-        click_button "Save changes"
+        fill_in userid, with: new_userid
+        fill_in "新パスワード", with: user.password
+        fill_in "新パスワード（確認）", with: user.password
+        click_button "編集する"
       end
-      #it { should have_title(user.nickname) }
       it { should have_selector("div.alert.alert-success")}
-      it { should have_link("Sign out", href: signout_path)}
+      it { should have_link(logout, href: signout_path)}
       specify { expect(user.reload.userid).to  eq new_userid }
-      specify { expect(user.reload.email).to eq new_email }
     end
 
     describe "invalid user data" do
-      before { click_button "Save changes"}
+      before { click_button "編集する"}
 
       it{ should have_content("error")}
     end

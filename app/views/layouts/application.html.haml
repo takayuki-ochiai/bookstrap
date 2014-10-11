@@ -14,18 +14,18 @@
       .row
         - if signed_in?
           %aside.col-md-3.col-md-push-2
-            %section
+            %section#user_info
               = render "shared/user_info"
-            %section
+            / %section#micropost_number
+            /   = render "shared/micropost_number"
+            %section#user_actions
               = render "shared/user_actions"
-            %section
-              = render "shared/stats"
-            %section
+            %section#genre_links
               = render "shared/genre_links"
-          .col-md-6.col-md-push-2
+          #home_content.col-md-6.col-md-push-2
             = yield
         - else
-          %aside.col-md-2.col-md-push-1
+          %section#genre_links.col-md-3.col-md-push-2
             = render "shared/genre_links"
-          .col-md-8.col-md-push-1
+          #home_content.col-md-6.col-md-push-2
             = yield

@@ -1,6 +1,6 @@
+/ ol要素はajaxに関連しているので削除しないこと
 - if @feed_items.any?
-  .microposts
+  %ol.microposts
     = render partial: "shared/feed_item", collection: @feed_items
-  = will_paginate @feed_items
 - else 
   %p 現在フィードはありません

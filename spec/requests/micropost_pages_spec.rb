@@ -16,8 +16,33 @@ describe "micropost_pages" do
       expect(page).to have_selector("li##{item.id}", text: item.content)
     end
   end
+  
+  context "edit micropost" do
+    let(:micropost){create(:micropost, user_id: user.id, product_id: product.id)}
+    before { visit edit_micropost_path(micropost) }
+    it { should have_title("感想を編集する")}
+    context "update invalid micropost" do
+      before do
+        fill_in "投稿内容", with: " "
+        click_button "編集する"
+      end
+      it{ should have_content("error")}
+    end
+    
 
-=begin
+    context "edit valid micropost" do
+      pending "目視では正常動作を確認" do
+      let(:new_content){ "てすとだよ" }
+      before do
+        fill_in "投稿内容", with: new_content
+        click_button "編集する"
+      end
+      specify { expect(micropost.reload.content).to eq new_content }
+      end
+    end
+  end
+
+  pending "正確なテストが作れていない。手動では確認済み" do
   #TODO: activerecord reputationで適用できるテストの作成
   describe "good toggle buttons " do
     pending "正常に動作しないため保留中"
@@ -98,7 +123,7 @@ describe "micropost_pages" do
       end
     end
   end
-=end
+  end
 end
 
 

@@ -1,0 +1,6 @@
+/ ol要素はajaxに関連しているので削除しないこと
+- if @recent_feed_items.any?
+  %ol.microposts
+    = render partial: "shared/feed_item", collection: @recent_feed_items
+- else 
+  %p 現在フィードはありません

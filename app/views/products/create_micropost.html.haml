@@ -1,9 +1,23 @@
 = provide :title,"感想を投稿"
-= form_for @micropost do |f|
-  = render "shared/error_messages", object: f.object
-  .field
-    = f.label :content, "レビュー投稿"
-    = f.text_area :content, placeholder: "（例） 人気の作品です。主人公の老成した強さには安定感がある一方で、心境の変化や心のどこかで憎んでいた相手を許すシーンなど、内面的な変化も細やかに描かれている点が素敵です。あと、ご飯の描写が秀逸です。飯テロ注意。"
-    = f.hidden_field :product_id, value: @product.id
-    = f.hidden_field :user_id, value: current_user.id
-    = f.submit "投稿する", class: "btn btn-large btn-primary"
+- provide :title, "感想を投稿する"
+#create_micropost_page
+  %h3="#{@product.title}の感想を投稿"
+  = form_for @micropost do |f|
+    = render "shared/error_messages", object: f.object
+    .field
+      %table
+        %tr.title
+          %th.title
+            作品名
+          %td.title
+            %h4 
+            = @product.title
+        %tr.content
+          %th
+            = f.label :content, "投稿内容"
+          %td
+            = f.text_area :content, placeholder: "（例） 人気の作品です。主人公の老成した強さには安定感がある一方で、心境の変化や心のどこかで憎んでいた相手を許すシーンなど、内面的な変化も細やかに描かれている点が素敵です。あと、ご飯の描写が秀逸です。なお、飯テロ注意。", :size => "50x7"
+            %p ※400字以内
+      = f.hidden_field :product_id, value: @product.id
+      = f.hidden_field :user_id, value: current_user.id
+      = f.submit "投稿する", class: "btn btn-large btn-primary"

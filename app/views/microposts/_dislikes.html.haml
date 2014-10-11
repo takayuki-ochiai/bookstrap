@@ -1,4 +1,4 @@
 = form_tag(dislikes_micropost_path(feed_item.id), method: :delete,remote: true) do
-  = button_tag( class: "btn btn-default btn-primary") do
-    = content_tag :span, "いいね！を取り消す"
+  = button_tag( class: "btn btn-white btn-xs dislikes-button", id: feed_item.id ) do
+    = content_tag :span, "いいね！を削除"
 

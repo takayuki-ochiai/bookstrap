@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: :show
-  before_action :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
+  before_action :signed_in_user, only: [:edit, :update, :destroy, :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user, only: :destroy
 
   def index
-    @users = User.paginate(page: params[:page])
+    @search = User.search(params[:q])
+    @users = @search.result.paginate(page: params[:page])
   end
 
   def show
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
 
   def new
     @user=User.new
+    render layout: "no_side"
   end
 
 

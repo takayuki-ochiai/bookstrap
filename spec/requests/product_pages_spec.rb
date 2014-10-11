@@ -13,20 +13,14 @@ describe "作品CRUDページ" do
 
     it { should have_title "感想を投稿"}
 
-    context "create invalid micropost" do
-      it "is invalid without content " do
-        expect { click_button "投稿する" }.not_to change(Micropost, :count)
-      end
-
       describe "render error message " do
         before {click_button "投稿する"}
         it { should have_content('error') }
       end
-    end
 
 
     context "create valid micropost" do
-      before { fill_in "レビュー投稿", with: "testest"}
+      before { fill_in "投稿内容", with: "testest"}
       it "is valid micropost content" do
         expect { click_button "投稿する" }.to change(Micropost, :count)
       end
@@ -123,7 +117,7 @@ describe "作品CRUDページ" do
       before(:all) { 60.times { create(:product) } }
       after(:all) { Product.delete_all }
       #ページネーションタグが作られているか?
-      it { should have_selector("div.pagination") }
+      it { should have_selector("ul.pagination") }
 
       it "render product pagenation" do
         Product.paginate(page: 1).each do |product|
@@ -141,7 +135,7 @@ describe "作品CRUDページ" do
         context "search field is used" do
           context "title search" do
             before do 
-              fill_in "キーワードで検索", with: free_word
+              fill_in "（例）  羅生門 タイトル or ジャンル", with: free_word
               click_button search
             end
             it { should have_selector("ul.products li", text: free_word) }
@@ -150,7 +144,7 @@ describe "作品CRUDページ" do
 
           context "genre search" do
             before do 
-              fill_in "キーワードで検索", with: select_genre
+              fill_in "（例）  羅生門 タイトル or ジャンル", with: select_genre
               click_button search
             end
 

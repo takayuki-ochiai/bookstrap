@@ -1,8 +1,7 @@
-= search_form_for @search do |f|
-  .field
-    = f.label :title_or_genre_cont, "キーワードで検索"
-    = f.text_field :title_or_genre_cont
-  .actions= f.submit "検索"
-
-
-
+#product_search_form
+  %p 作品を検索
+  = search_form_for @search do |f|
+    .field
+      = f.text_field :title_or_genre_cont, placeholder: "（例）  羅生門 タイトル or ジャンル"
+    .actions
+      = f.submit "検索"

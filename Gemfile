@@ -15,6 +15,7 @@ gem 'will_paginate'#, '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'ransack'
 gem 'activerecord-reputation-system', github: 'NARKOZ/activerecord-reputation-system', branch: 'rails4'
+gem 'will_paginate-bootstrap'
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'

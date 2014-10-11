@@ -2,63 +2,70 @@ require 'spec_helper'
 
 describe "AuthenticationPages" do
   subject { page }
-  
+  #ヘッダー要素
+  let(:logout){ "ログアウト" }
+  let(:login){  "ログイン"  }
+  let(:users){ "人を探す" }
+  let(:profile){ "マイページ" }
+  let(:edit_user){ "ユーザー情報管理" }
+  let(:top){ "TOP" }
+
   describe "SignIn page" do
     before { visit signin_path }
 
     context "visit signin page" do
-      it { should have_title("SignIn")}
+      it { should have_title("SignIn") }
     end
 
     context "sign in is Invalid" do
-      before { click_button "Sign in" }
+      before { click_button "ログイン" }
 
       it { should have_title("SignIn")}
       it { should have_selector("div.alert.alert-error", text: "Invalid")}
 
       context "after visiting another page" do
-        before { click_link "Home" }
+        before { click_link top }
         it { should_not have_selector('div.alert.alert-error') }
       end
     end
 
     context "signin is valid" do
       let(:user){ create(:user) }
-      before { valid_signin(user) }#utility参照
+      before { sign_in user }#utility参照
 
-      it { should have_link("Sign out", href: signout_path) }#utility参照
-      it { should have_title(user.nickname) }
+      it { should have_link(logout, href: signout_path) }#utility参照
+      it { should have_title("ホーム") }
       it { should_not have_selector("div.alert.alert-error", text: "Invalid") }
-      it { should have_link("Profile", href: user_path(user)) }
+      it { should have_link(profile, href: user_path(user)) }
 
-      it { should_not have_link("Sign in", href: signin_path) }
+      it { should_not have_link(login, href: signin_path) }
 
 
       context "signout user" do
-        before{ click_link "Sign out" }
-        it { should have_link("Sign in", href: signin_path)}
+        before{ click_link logout }
+        it { should have_link(login, href: signin_path)}
       end
     end
 
     describe "update user infomation" do
-      let(:user){ FactoryGirl.create(:user) }
+      let(:user){ create(:user) }
       before { sign_in user}
 
-      it { should have_title(user.nickname) }
-      it { should have_link('Users', href: users_path) }
-      it { should have_link("Profile", href: user_path(user))}
-      it { should have_link("Settings", href: edit_user_path(user)) }
-      it { should have_link("Sign out", href: signout_path) }
-      it { should_not have_link("Sign in", href: signin_path) }
+      it { should have_title("ホーム") }
+      it { should have_link(users, href: users_path) }
+      it { should have_link(profile , href: user_path(user))}
+      it { should have_link(edit_user, href: edit_user_path(user)) }
+      it { should have_link(logout, href: signout_path) }
+      it { should_not have_link(login, href: signin_path) }
 
         context "user signout" do
-          before { click_link "Sign out" }
+          before { click_link logout }
 
           it { should_not have_title(user.nickname) }
-          it { should_not have_link('Profile', href: user_path(user))}
-          it { should_not have_link('Settings', href: edit_user_path(user)) }
-          it { should_not have_link('Sign out', href: signout_path) }
-          it { should have_link('Sign in', href: signin_path) }
+          it { should_not have_link(profile, href: user_path(user))}
+          it { should_not have_link(edit_user, href: edit_user_path(user)) }
+          it { should_not have_link(logout, href: signout_path) }
+          it { should have_link(login , href: signin_path) }
         end
     end
 
@@ -70,17 +77,12 @@ describe "AuthenticationPages" do
         describe "user controller" do
           context "visit edit page" do
             before { visit edit_user_path(user) }
-            it { should_not have_title('Edit user') }
+            it { should_not have_title('ユーザー情報の管理') }
           end
 
           context "update user data" do
             before { patch user_path(user) }
             specify { expect(response).to redirect_to(signin_path) }
-          end
-
-          context "visit user index" do
-            before { visit users_path }
-            it { should have_title("SignIn") }
           end
 
           context "delete micropost" do
@@ -93,6 +95,11 @@ describe "AuthenticationPages" do
               before { delete micropost_path(FactoryGirl.create(:micropost)) }
               specify { expect(response).to redirect_to(signin_path) }
             end
+          end
+
+          context "edit micropost" do
+            before { visit edit_micropost_path(create(:micropost))}
+            it { should have_title("SignIn")}
           end
 
           context "visiting the following page" do
@@ -109,13 +116,11 @@ describe "AuthenticationPages" do
         describe "friendly forward" do
           before do
             visit edit_user_path(user)
-            fill_in "Userid", with: user.userid
-            fill_in "Password", with: user.password
-            click_button "Sign in"
+            sign_in user
           end
 
           context "redirect to edit page" do
-            it { should have_title("Edit user") }
+            it { should have_title("ユーザー情報の管理") }
           end
         end
 

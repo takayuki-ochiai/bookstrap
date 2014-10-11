@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
 
-  before_action :signed_in_user, only: [:index, :new, :create, :edit, :update, :destroy, :create_micropost]
+  before_action :signed_in_user, only: [:new, :create, :edit, :update, :destroy, :create_micropost]
   before_action :admin_user, only: [:destroy, :edit, :update]
   before_action :set_product, only: [:show, :edit, :update, :create_micropost]
 
@@ -9,7 +9,6 @@ class ProductsController < ApplicationController
   def index
     @search = Product.search(params[:q])#search_formから値を取得
     @products = @search.result.paginate(page: params[:page])
-    #@products = Product.search(params[:search])
   end
 
   def search_product
@@ -21,6 +20,7 @@ class ProductsController < ApplicationController
   #TODO: current_user.microposts.buildはわかりにくいので直す
   def show
     @micropost = current_user.microposts.build if signed_in?
+    render layout: "no_side"
   end
 
   def new
@@ -32,7 +32,7 @@ class ProductsController < ApplicationController
     if @product.save
       #保存成功の場合
       flash[:success] = "作品の登録に成功しました！"
-      redirect_to @product
+      redirect_to create_micropost_product_path(@product.id)
     else
       #失敗の場合
       render "new"
@@ -132,7 +132,7 @@ class ProductsController < ApplicationController
   private
     def set_product
       @product = Product.find(params[:id])
-      @microposts = @product.microposts.paginate(page: params[:page])
+      @microposts = @product.microposts.paginate(page: params[:page], :per_page => 10)
     end
 
     def product_params

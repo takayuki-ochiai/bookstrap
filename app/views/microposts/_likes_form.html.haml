@@ -1,6 +1,6 @@
 - unless current_user == nil
   - unless current_user?(feed_item.user)
-    .likes_form
+    .likes_form{ id: feed_item.id }
       - if current_user.liked?(feed_item)
         = render partial: "microposts/dislikes", locals: {feed_item: feed_item}
       - else

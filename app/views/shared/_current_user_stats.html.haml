@@ -1,11 +1,10 @@
-
+- @user = current_user
 %ul.stats
   %li
     %a{ href: following_user_path(@user) }
-      %strong#following.stat
+      %strong#current_following.stat
         ="フォロー  " + @user.followed_users.count.to_s
   %li
     %a{ href: followers_user_path(@user) }
-      %strong#followers.stat
+      %strong#current_followers.stat
         = "フォロワー  " + @user.followers.count.to_s
-

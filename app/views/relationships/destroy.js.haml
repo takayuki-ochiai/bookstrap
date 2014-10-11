@@ -1,2 +1,3 @@
 $("#follow_form").html("#{escape_javascript(render('users/follow'))}")
-$("#followers").html('#{@user.followers.count}')
+$("#followers").html('フォロワー #{@user.followers.count}')
+$("#current_following").html("フォロー #{current_user.followed_users.count}")

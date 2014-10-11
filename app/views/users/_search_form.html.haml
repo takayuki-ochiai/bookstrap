@@ -1,0 +1,7 @@
+= search_form_for @search do |f|
+  .search_field
+    .search_header
+      = f.label :nickname_cont, "ユーザー名で検索"
+    .search_box
+      = f.text_field :nickname_cont
+      = f.submit "検索"

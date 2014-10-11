@@ -5,22 +5,24 @@
       .navbar-header.col-md-5.col-md-push-2
         %a.navbar-brand.page-scroll{:href => root_path} Bookstrap!
       / Collect the nav links, forms, and other content for toggling
-      %ul.nav.navbar-nav.col-md-5.navbar-right
-        %li= link_to "Home", root_path
+      %ul.nav.navbar-nav.col-md-6.navbar-right
+        %li= link_to "TOP", root_path
+        %li= link_to "人を探す", users_path
+        %li= link_to "作品を探す", products_path
         - if signed_in?
-          %li= link_to "Users", users_path
           %li= link_to "新しい作品の追加", new_product_path
           %li#fat-menu.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-              Account
+              アカウント管理
               %b.caret
             %ul.dropdown-menu
-              %li= link_to "Profile", current_user
-              %li= link_to "Settings", edit_user_path(current_user)
+              %li= link_to "マイページ", current_user
+              %li= link_to "ユーザー情報管理", edit_user_path(current_user)
               %li.divider
               %li
-                = link_to "Sign out", signout_path, method: "delete"
+                = link_to "ログアウト", signout_path, method: "delete"
         -else
-          %li= link_to "Sign in", signin_path
+          %li= link_to "ログイン", signin_path
+          %li= link_to "会員登録", signup_path
       / /.navbar-collapse
     / /.container-fluid

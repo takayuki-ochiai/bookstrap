@@ -8,18 +8,20 @@ Labohp::Application.routes.draw do
       get :following, :followers
     end
   end
+
   match "/signup", to: "users#new", via: "get"
   #サインイン用リソースとルーティング
   resources :sessions, only: [:new, :create, :destroy]
   match "/signin", to: "sessions#new", via: "get"
   match "/signout", to: "sessions#destroy", via: "delete"
   #マイクロポスト用リソース
-  resources :microposts , only: [:create, :destroy] do
+  resources :microposts , only: [:create, :destroy, :edit, :update] do
     member do
       post :likes
       delete :dislikes
     end
   end
+
   resources :relationships, only: [:create, :destroy]
   
   resources :products do

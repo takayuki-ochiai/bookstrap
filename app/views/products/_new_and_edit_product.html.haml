@@ -1,15 +1,24 @@
 = form_for(@product) do |f|
   = render "shared/error_messages", object:f.object
-
-  = f.label :title, "作品名"
-  = f.text_field :title
-
-  = f.label :genre,"ジャンル選択"
-  = f.select(:genre,["文学","恋愛","歴史","推理","ファンタジー","SF","ホラー","コメディ","冒険","学園","戦記","童話","詩","エッセイ","リプレイ","その他"],{include_blank: false}, size: 16)
-
-  = f.label :link, "リンク"
-  = f.text_field :link
-  - if defined? show_new
-    = f.submit "投稿する"
-  - else
-    = f.submit "編集する"
+  
+  #product_new_form
+    %table
+      %tr
+        %th
+          = f.label :title, "作品名"
+        %td
+          = f.text_field :title
+      %tr
+        %th
+          = f.label :genre,"ジャンル選択"
+        %td
+          = f.select(:genre,["文学","恋愛","歴史","推理","ファンタジー","SF","ホラー","コメディ","冒険","学園","戦記","童話","詩","エッセイ","リプレイ","その他"],{include_blank: false}, size: 1)
+      %tr
+        %th
+          = f.label :link, "リンク"
+        %td
+          = f.text_field :link
+    - if defined? show_new
+      = f.submit "投稿する", class: "btn btn-primary"
+    - else
+      = f.submit "編集する", class: "btn btn-primary"

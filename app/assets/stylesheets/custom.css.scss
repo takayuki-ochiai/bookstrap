@@ -26,6 +26,78 @@ textarea {
   margin-bottom: 10px;
 }
 
+ul{
+  li{
+    list-style: none;
+  }
+}
+
+.dislikes-button{
+  border-radius: 2px;
+}
+
+/* home */
+#home_content{
+  margin-top: 20px;
+  section{
+    margin-left: 0px;
+  }
+  h3{
+    margin-left:10px;
+  }
+
+  ol{
+    list-style: none;
+    padding-left: 0px;
+    display: table;
+    width: 540px;
+  }
+}
+
+#recent_micropost{
+  margin-top: 20px;
+  border: 1px solid blue;
+
+  h4{
+    margin-right: 10px;
+    margin-left: 10px;
+    border-bottom: 2px solid blue;
+  }
+
+  ul{
+    list-style: none;
+    padding-left: 5px;
+    display: table;
+    li{
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
+}
+
+
+
+.home_notice{
+  border: 1px solid blue;
+  h5 {
+    margin-right: 10px;
+    margin-left: 10px;
+    border-bottom: 2px solid blue;
+    ul{
+      list-style: none;
+      padding-left: 5px;
+      display: table;
+      li{
+        display: inline-block;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+
+
+
 
 /* header */
 .navbar-default-white {
@@ -34,99 +106,248 @@ textarea {
   border-color: #5bc0de;
 }
 
-/* users index */
+.navbar-right{
+  margin-right: 30px;
+}
 
-.users {
-  margin: 0;
-  li {
-    overflow: auto;
-    padding: 10px 0;
-    border-top: 1px solid $gray-lighter;
-    list-style: none;
-    &:last-child {
-      border-bottom: 1px solid $gray-lighter;
+/* users */
+/* index */
+.user_header{
+  font-size: 25px;
+  margin: 0px 0px 15px 0px;
+}
+
+#users_index{
+  .search_field{
+    .search_header{
+     font-size: 18px;
+    }
+    .search_box{
+      margin: 20px 0px 20px 10px;
+    }
+  }
+  .users {
+    margin: 0;
+    p{
+      font-size: 16px;
+      font-weight: bold;
+    }
+    li {
+      overflow: auto;
+      padding: 10px 0;
+      font-size: 8px;
+      list-style: none;
+      width: 120px;
+      height: 100px;
+      display: inline-block;
+      text-align: center;
+
+      &:last-child {
+        border-bottom: 1px solid $gray-lighter;
+      }
+
+
+      .new_user_cell{
+   
+        .new_user_profile{
+        }
+        .destroy_option{
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+/* users_show */
+
+#users_show_page{
+  position: relative;
+  .profile{
+    border: 1px solid black;
+    p{
+      padding: 0px 0px 0px 15px;
+      margin: 0px 0px 0px 50px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    img{
+      float: left;
+    }
+    ul.stats{
+      li{
+        display: inline-block;
+        padding-left: 15px;
+      }
+    }
+  }
+  input{
+    position: absolute;
+    right: 15px;
+    top: 10px;
+  }
+}
+
+/* micropost feed*/
+.microposts {
+  .feed_item{
+    height:auto;
+    position: relative;
+    margin-bottom: 10px;
+    .likes_block{
+      position: absolute;
+      bottom: 0px;
+      left: 10px;
+
+      .likes_form{
+        display:inline-block;
+        left: 10px;
+        .btn-nav{
+          @extend .btn-primary !optional;
+          background-color: #3b5999;
+          border: 1px solid #3b5999;
+        }
+        .btn-white{
+          @extend .btn-default !optional;
+          span{
+            font-color: $gray-lighter;
+            font-weight: 500;
+          }
+        }
+      }
+
+      .likes{
+        display: inline_block;
+      }
+    }
+
+    .delete_block{
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
     }
   }
 }
 
-.microposts {
-  margin: 10px 0 0 0;
 
-  li {
-    padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
-    list-style: none;
-    margin-left: 0px;
-  }
-}
-
-.content {
-  display: block;
-}
 
 .timestamp {
   color: $gray-light;
 }
 
-.gravatar {
-  float: left;
-  margin-right: 10px;
+.left_content{
+  border: 1px solid red;
+  font-size: 10px;
+  margin-left: 15px;
 }
 
+.right_content{
+  border: 1px solid blue;
+  position: relative;
+  .product{
+
+  }
+  .content{
+    height: 100px;
+    top: 15px;
+    margin-left: 10px;
+    overflow: hidden;
+  }
+  .likes_block{
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+  }
+
+}
+
+
+
+/* product index micropost */
+#product_index{
+  .right_content{
+    .product{
+      .btn{
+        position:absolute;
+        top: 5px;
+        right: 30px;
+      }
+    }
+  }
+}
 
 /* sidebar */
-.stats {
-  overflow: auto;
-  a {
-    float: left;
-    padding: 0 10px;
-    border-left: 1px solid $gray-lighter;
-    color: gray;
-    &:first-child {
-      padding-left: 0;
-      border: 0;
+section#user_info{
+  margin-top: 15px;
+  margin-right: 10px;
+  ul{
+    list-style: none;
+    padding-left: 0px;
+    li{
+      display: inline-block;
+      margin-right: 10px;
     }
-    &:hover {
-      text-decoration: none;
-      color: blue;
-    }
-  }
-  strong {
-    display: block;
   }
 }
 
-.user_avatars {
-  overflow: auto;
-  margin-top: 10px;
-  .gravatar {
-    margin: 1px 1px;
+section#micropost_number{
+  margin-top: 0px;
+  margin-bottom:15px;
+  background-color: white;
+  border: solid 2px red;
+  ul{
+    li{
+      display: inline-block;
+      margin-right: 10px;
+      height: 15px;
+    }
   }
 }
 
-section{
-  .btn.btn-lg{
-    @extend .btn-default !optional;
-    text-align: left;
-    width: 240px;
-    border-radius: 0px;
-    a {
-      color: black;
-      text-decoration: none;
-      font-size: 15px;
-    }
-  }
+section#genre_links{
+  margin-top: 40px;
+  margin-bottom: 50px;
+  border: solid 1.5px blue;
   h4{
+    margin-left: 5px;
     p{
       display: inline-block;
+      margin-left: 15px;
+      font-size: 20px;
+      font-weight: bold;
     }
   }
+
   ul {
     list-style: none;
     padding-left: 0px;
     display: table;
-    li a{
-      color: black;
+    li{
+      height: 30px;
+      a{
+        color: black;
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
+/* user_action */
+section{
+  .btn-lg{
+    @extend .btn-lg !optional;
+    text-align: left;
+    width: 260px;
+    height: 50px;
+    border-radius: 0px;
+    i{
+      display: inline-block;
+    }
+    p{
+      display: inline-block;
+      font-size: 15px;
+      font-weight: bold;
     }
   }
 }
@@ -145,14 +366,250 @@ section{
   @extend .error;
 }
 
-/* テスト用 */
-.col-md-3{
-  background-color: $gray-light;
+/* edit_user_page */
+#edit_user_page{
+  p{ 
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .edit_user_form{
+
+    table{
+      margin: 0px 15px 15px 60px;
+      tr{
+        border-bottom: 20px solid white;
+        th{
+          width: 200px;
+        }
+        td{
+          width: 300px;
+          a{
+            font-size: 14px;
+          }
+        }
+      }
+    }
+    .btn{
+      margin-left: 190px;
+    }
+  }
 }
 
-.col-md-6{
-  background-color: blue;
+/* login_forms */
+#login_page{
+
+  h2{
+    text-align: center;
+    display: block;
+    margin-left: 35px;
+    margin-bottom: 25px;
+  }
+
+  .login_form{
+    width: 400px;
+    margin-top: 0px;
+    margin-left: 160px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 1px solid blue;
+    border-radius: 5px;
+    text-align: center;
+
+    p{
+      margin-bottom: 20px;
+      border-bottom: 3px solid blue;
+      width: 360px;
+      text-align: left;
+      margin-left: 20px;
+    }
+
+    input{
+      display:block;
+      margin-left: 115px;
+    }
+
+    label{
+      display:block;
+    }
+
+    .btn.btn-primary{
+        margin-top: 10px;
+        margin-bottom: 40px;
+        margin-left: 160px;
+        font-weight: bold;
+    }
+
+    a{
+      font-weight: bold;
+    }
+  }
 }
 
+/*  signup_form */
 
+#signup_page{
+
+  .title{
+    border: 1px solid blue;
+    margin-bottom: 5px;
+    border-radius: 5px;
+
+    h3{
+      display: block;
+      text-align: center;
+    }
+  }
+
+  .signup_form{
+    border: 1px solid blue;
+    border-radius: 5px;
+
+    table{
+      margin: 25px 25px 25px 25px;
+
+      tr{
+        border-top: 5px solid white;
+        border-bottom: 5px solid white;
+        height: 50px;
+
+        th{
+          width:200px;
+          background-color: $gray-lighter;
+
+          label{
+            margin-left: 15px;
+            font-size: 15px;
+            font-weight: 850;
+          }
+        }
+
+        td{
+          width: 450px;
+          input{
+            margin-left: 10px;
+            margin-right: 10px;
+            width: 430px;
+          }
+          p{
+            text-align: right;
+            font-size: 11px;
+            margin-right: 10px;
+          }
+
+          input{
+            border-radius: 3px;
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+
+    .btn{
+      margin-left: 140px;
+      margin-bottom: 25px;
+      width: 400px;
+      height: 55px;
+      font-size: 25px;
+      font-weight: bold;
+    }
+  }
+}
+
+/* product index */
+#product_index_page{
+  #product_search_form{
+    p{
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .field{
+      display:inline-block;
+      input{
+        width: 400px;
+      }
+    }
+    .actions{
+      display:inline-block;
+      float: right;
+    }
+  }
+  .btn.btn-default.new_product_link{
+    height: 40px;
+    margin-top: 30px;
+    margin-left: 200px;
+    font-weight: bold;
+    padding-left: 10px;
+    i{
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+}
+
+#product_new_page{
+  p{
+    font-size: 20px;
+    font-weight: bold;
+  }
+  table{
+    margin: 20px 15px 15px 10px;
+    tr{
+      border-bottom: 20px solid white;
+      th{
+        width: 200px;
+      }
+      td{
+        width: 300px;
+      }
+    }
+  }
+  .btn{
+    margin-left: 190px;
+  }
+}
+
+#product_show_page{
+  .product_info{
+    border: 1px solid blue;
+    position: relative;
+    font-size: 15px;
+    span{
+      margin-left: 10px;
+    }
+    button{
+      position: absolute;
+      right: 0px;
+      top: 20px;
+    }
+  }
+}
+
+#create_micropost_page{
+  table{
+    border: 1px solid black;
+    tr{
+      border: 1px solid black;
+    }
+    tr.title{
+      height: 70px;
+      th{
+        width: 150px;
+      }
+    }
+    tr.content{
+      height: 200px;
+      th{
+        width: 150px;
+      }
+      td{
+        p{
+          text-align: right;
+        }
+      }
+    }
+  }
+  .btn{
+    margin-left: 200px;
+  }
+}
 

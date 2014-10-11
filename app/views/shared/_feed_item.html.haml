@@ -20,6 +20,7 @@
       %span.delete_block
         - unless current_user == nil
           -if current_user == feed_item.user || current_user.admin?
+            =link_to "投稿を編集", edit_micropost_path(feed_item.id)
             =link_to "投稿を削除", micropost_path(feed_item.id), method: :delete, data: { confirm: "本当に削除してもよろしいですか？" }
 
 

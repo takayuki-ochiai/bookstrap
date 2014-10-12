@@ -11,7 +11,7 @@
       = link_to "#{@product.link}", @product.link
     = button_to create_micropost_product_path(@product.id), method: :get, class: "btn btn-default" do
       感想を投稿する
-  %h3 #{@product.title}に関する感想
+  %h4 #{@product.title}に関する感想
   .feed_items
     - if @microposts.any?
       = will_paginate @microposts, :renderer => BootstrapPagination::Rails
@@ -19,5 +19,5 @@
         = render partial: "shared/feed_item", collection: @microposts
       = will_paginate @microposts, :renderer => BootstrapPagination::Rails
     - else
-      %h3
+      %p
         #{@product.title}の感想はまだありません

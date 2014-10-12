@@ -1,12 +1,9 @@
 = render "shared/home_notice"
 
-#recent_micropost
-  %h4 
-    %ul
-      %li
-        %i.glyphicon.glyphicon-book
-      %li
-        %p 最近投稿された感想
+#recent_micropost 
+  %h4
+    %i.glyphicon.glyphicon-book
+      最近投稿された感想
 
   = render "shared/feed"
   = will_paginate @feed_items, :renderer => BootstrapPagination::Rails

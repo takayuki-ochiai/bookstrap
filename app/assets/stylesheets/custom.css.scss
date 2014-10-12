@@ -8,6 +8,29 @@ html {
 
 body {
   padding-top: 60px;
+  .container#main{
+    background-color: white;
+    position: relative;
+    width: 960px;
+    #side-nav{
+      width:280px;
+      margin-top: 30px;
+      background-color: white;
+      border-top: 1px solid $gray-lighter;
+    }
+    #home_content{
+      width:660px;
+      padding-left: 15px;
+      padding-top: 20px;
+      margin-left: 15px;
+      border-left: 3px solid $gray-lighter;
+      border-top: 1px solid $gray-lighter;
+      top: 10px;
+      position: absolute;
+      left: 280px;
+      background-color: white;
+    }
+  }
 }
 
 section {
@@ -26,6 +49,11 @@ textarea {
   margin-bottom: 10px;
 }
 
+ul.pagination{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 ul{
   li{
     list-style: none;
@@ -36,33 +64,35 @@ ul{
   border-radius: 2px;
 }
 
+
+
+
 /* home */
 #home_content{
   margin-top: 20px;
+  margin-left: 0px;
   section{
     margin-left: 0px;
   }
-  h3{
-    margin-left:10px;
+  h4{
+    padding: 5px 5px 5px 20px;
+    font-weight: bold;
+    border-bottom: 2px solid $gray-lighter;
+    width: 100%;
+    margin-left: -5px;
+    display:block;
   }
 
   ol{
     list-style: none;
     padding-left: 0px;
     display: table;
-    width: 540px;
+    width: 615px;
   }
 }
 
 #recent_micropost{
   margin-top: 20px;
-  border: 1px solid blue;
-
-  h4{
-    margin-right: 10px;
-    margin-left: 10px;
-    border-bottom: 2px solid blue;
-  }
 
   ul{
     list-style: none;
@@ -78,11 +108,13 @@ ul{
 
 
 .home_notice{
-  border: 1px solid blue;
+  width: 95%;
+  margin: 0px 10px 50px 10px;
   h5 {
-    margin-right: 10px;
-    margin-left: 10px;
-    border-bottom: 2px solid blue;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-bottom: 0px;
+    border-bottom: 2px solid $gray-lighter;
     ul{
       list-style: none;
       padding-left: 5px;
@@ -104,10 +136,17 @@ ul{
   @extend .navbar-default !optional;
   background-color: white;
   border-color: #5bc0de;
+  .navbar-header{
+    margin-left: 115px;
+    a.navbar-brand{
+      color: #5bc0de;
+      font-size: 25px;
+    }
+  }
 }
 
 .navbar-right{
-  margin-right: 30px;
+  margin-right: 100px;
 }
 
 /* users */
@@ -121,9 +160,12 @@ ul{
   .search_field{
     .search_header{
      font-size: 18px;
+     label{
+      margin-left: 15px;
+     }
     }
     .search_box{
-      margin: 20px 0px 20px 10px;
+      margin: 20px 0px 20px 20px;
     }
   }
   .users {
@@ -163,7 +205,7 @@ ul{
 #users_show_page{
   position: relative;
   .profile{
-    border: 1px solid black;
+    margin-bottom: 30px;
     p{
       padding: 0px 0px 0px 15px;
       margin: 0px 0px 0px 50px;
@@ -192,38 +234,49 @@ ul{
   .feed_item{
     height:auto;
     position: relative;
+    margin-left: 15px;
     margin-bottom: 10px;
-    .likes_block{
-      position: absolute;
-      bottom: 0px;
-      left: 10px;
-
-      .likes_form{
-        display:inline-block;
+    border-bottom: 2px solid $gray-lighter;
+    .left_content{
+      font-size: 10px;
+    }
+    .right_content{
+      position: relative;
+      .content{
+        height: 100px;
+        top: 15px;
+        padding-left: 10px;
+        overflow: hidden;
+      }
+      .likes_block{
+        position: absolute;
+        bottom: 0px;
         left: 10px;
-        .btn-nav{
-          @extend .btn-primary !optional;
-          background-color: #3b5999;
-          border: 1px solid #3b5999;
-        }
-        .btn-white{
-          @extend .btn-default !optional;
-          span{
-            font-color: $gray-lighter;
-            font-weight: 500;
+        .likes_form{
+          display:inline-block;
+          left: 10px;
+          .btn-nav{
+            @extend .btn-primary !optional;
+            background-color: #3b5999;
+            border: 1px solid #3b5999;
+          }
+          .btn-white{
+            @extend .btn-default !optional;
+            span{
+              font-color: $gray-lighter;
+              font-weight: 500;
+            }
           }
         }
-      }
-
-      .likes{
-        display: inline_block;
+        .likes{
+          display: inline_block;
+        }
       }
     }
-
     .delete_block{
       position: absolute;
       bottom: 0px;
-      right: 0px;
+      right: 20px;
     }
   }
 }
@@ -232,32 +285,6 @@ ul{
 
 .timestamp {
   color: $gray-light;
-}
-
-.left_content{
-  border: 1px solid red;
-  font-size: 10px;
-  margin-left: 15px;
-}
-
-.right_content{
-  border: 1px solid blue;
-  position: relative;
-  .product{
-
-  }
-  .content{
-    height: 100px;
-    top: 15px;
-    margin-left: 10px;
-    overflow: hidden;
-  }
-  .likes_block{
-    position: absolute;
-    bottom: 0px;
-    left: 10px;
-  }
-
 }
 
 
@@ -275,10 +302,16 @@ ul{
   }
 }
 
+.product-only{
+  margin-left: 15px;
+  border-bottom: 2px solid $gray-lighter;
+}
+
 /* sidebar */
 section#user_info{
   margin-top: 15px;
   margin-right: 10px;
+  margin-bottom: 30px;
   ul{
     list-style: none;
     padding-left: 0px;
@@ -293,7 +326,6 @@ section#micropost_number{
   margin-top: 0px;
   margin-bottom:15px;
   background-color: white;
-  border: solid 2px red;
   ul{
     li{
       display: inline-block;
@@ -304,9 +336,9 @@ section#micropost_number{
 }
 
 section#genre_links{
-  margin-top: 40px;
-  margin-bottom: 50px;
-  border: solid 1.5px blue;
+  width: 285px;
+  margin: 0px 0px 50px 0px;
+  border-top: solid 2px $gray-lighter;
   h4{
     margin-left: 5px;
     p{
@@ -316,6 +348,7 @@ section#genre_links{
       font-weight: bold;
     }
   }
+
 
   ul {
     list-style: none;
@@ -400,15 +433,15 @@ section{
 
   h2{
     text-align: center;
+    margin-right: 60px;
     display: block;
-    margin-left: 35px;
     margin-bottom: 25px;
   }
 
   .login_form{
     width: 400px;
     margin-top: 0px;
-    margin-left: 160px;
+    margin-left: 200px;
     padding-top: 20px;
     padding-bottom: 20px;
     border: 1px solid blue;
@@ -450,22 +483,22 @@ section{
 #signup_page{
 
   .title{
-    border: 1px solid blue;
     margin-bottom: 5px;
     border-radius: 5px;
 
     h3{
       display: block;
-      text-align: center;
+      margin-left: 350px;
     }
   }
 
   .signup_form{
-    border: 1px solid blue;
+    border: 1px solid #5bc0de;
     border-radius: 5px;
+    width: 85%;
 
     table{
-      margin: 25px 25px 25px 25px;
+      margin: 25px 25px 25px 55px;
 
       tr{
         border-top: 5px solid white;
@@ -505,7 +538,7 @@ section{
     }
 
     .btn{
-      margin-left: 140px;
+      margin-left: 190px;
       margin-bottom: 25px;
       width: 400px;
       height: 55px;
@@ -530,13 +563,12 @@ section{
     }
     .actions{
       display:inline-block;
-      float: right;
     }
   }
   .btn.btn-default.new_product_link{
     height: 40px;
     margin-top: 30px;
-    margin-left: 200px;
+    margin-left: 230px;
     font-weight: bold;
     padding-left: 10px;
     i{
@@ -570,9 +602,10 @@ section{
 
 #product_show_page{
   .product_info{
-    border: 1px solid blue;
+    border: 1px solid #5bc0de;
     position: relative;
     font-size: 15px;
+    margin-bottom: 40px;
     span{
       margin-left: 10px;
     }
@@ -582,23 +615,38 @@ section{
       top: 20px;
     }
   }
+  .microposts{
+    margin-left: 100px;
+  }
+  .pagination{
+    margin-left: 100px;
+  }
 }
 
 #create_micropost_page{
   table{
-    border: 1px solid black;
     tr{
-      border: 1px solid black;
+      th{
+        border: 2px solid white;
+      }
+      td{
+        border: 2px solid $gray-lighter;
+      }
     }
     tr.title{
-      height: 70px;
       th{
+        background-color: $gray-lighter;
         width: 150px;
+        height: 70px;
+      }
+      td{
+        height: 70px;
       }
     }
     tr.content{
       height: 200px;
       th{
+        background-color: $gray-lighter;
         width: 150px;
       }
       td{

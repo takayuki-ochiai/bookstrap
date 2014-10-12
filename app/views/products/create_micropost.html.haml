@@ -1,7 +1,7 @@
 = provide :title,"感想を投稿"
 - provide :title, "感想を投稿する"
 #create_micropost_page
-  %h3="#{@product.title}の感想を投稿"
+  %h4="#{@product.title}の感想を投稿"
   = form_for @micropost do |f|
     = render "shared/error_messages", object: f.object
     .field
@@ -10,7 +10,7 @@
           %th.title
             作品名
           %td.title
-            %h4 
+            %p 
             = @product.title
         %tr.content
           %th

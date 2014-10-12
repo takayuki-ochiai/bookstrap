@@ -2,10 +2,10 @@
   .container
     .row
       / Brand and toggle get grouped for better mobile display
-      .navbar-header.col-md-5.col-md-push-2
+      .navbar-header
         %a.navbar-brand.page-scroll{:href => root_path} Bookstrap!
       / Collect the nav links, forms, and other content for toggling
-      %ul.nav.navbar-nav.col-md-6.navbar-right
+      %ul.nav.navbar-nav.navbar-right
         %li= link_to "TOP", root_path
         %li= link_to "人を探す", users_path
         %li= link_to "作品を探す", products_path

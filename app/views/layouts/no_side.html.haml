@@ -7,14 +7,14 @@
     = csrf_meta_tags
   %body
     = render "layouts/header"
-    .container
+    .container#no-side
       - flash.each do |key, value|
         %div(class="alert alert-#{key}")
           = value
       .row
         - if signed_in?
-          #home_content.col-md-9.col-md-push-2
+          #home_content.col-xs-9.col-md-push-2
             = yield
         - else
-          #home_content.col-md-9.col-md-push-2
+          #home_content.col-xs-9.col-md-push-2
             = yield

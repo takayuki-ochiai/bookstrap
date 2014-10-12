@@ -1,14 +1,14 @@
 / li要素はajaxに関連しているので削除しないこと
 %li.feed_item{id: feed_item.id}
   .row
-    .left_content.col-md-2
+    .left_content.col-xs-2
       .user
         = link_to gravatar_for(feed_item.user), feed_item.user
       .nick_name
         = link_to feed_item.user.nickname, feed_item.user
       .timestamp
         Posted #{time_ago_in_words(feed_item.created_at)} ago.
-    .right_content.col-md-9
+    .right_content.col-xs-10
       .product
         %p=link_to "#{feed_item.product.title}(#{feed_item.product.genre})", product_path(feed_item.product.id)
       .content

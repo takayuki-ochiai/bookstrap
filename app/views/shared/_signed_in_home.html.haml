@@ -1,17 +1,16 @@
 = render "shared/home_notice"
 - if @feed_items.any?
   #follower_micropost
-    %h3 フォロー中ユーザーの新着投稿
+    %h4 フォロー中ユーザーの新着投稿
     = render "shared/feed"
     = will_paginate @feed_items, :renderer => BootstrapPagination::Rails
 - else
   #follower_micropost
-    %h3 フォロー中ユーザーの投稿はありません
+    %h4 フォロー中ユーザーの投稿はありません
 - if @feed_items.any?
   #recent_micropost
-    %h3 最近投稿された感想
+    %h4 最近投稿された感想
     = render "shared/recent_feed"
     = will_paginate @recent_feed_items, :renderer => BootstrapPagination::Rails
 - else
   #recent_micropost
-

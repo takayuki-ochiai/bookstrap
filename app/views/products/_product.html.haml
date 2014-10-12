@@ -28,7 +28,7 @@
                     =link_to "投稿を削除", micropost_path(feed_item.id), method: :delete, data: { confirm: "本当に削除してもよろしいですか？" }
       - break
   - else
-    .micropost
+    .product-only
       %p=link_to "#{product.title}(#{product.genre})", product_path(product.id)
       %p この作品への感想の投稿はまだありません
       - unless current_user == nil

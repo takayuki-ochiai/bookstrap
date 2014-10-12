@@ -1,10 +1,10 @@
 - provide(:title, 'ユーザー一覧')
 .user_header
-  %p ユーザーを探す
+  %h4 ユーザーを探す
 #users_index
   = render "users/search_form"
   .users
-    %p 新着ユーザー
+    %h4 新着ユーザー
     / 検索機能と検索結果遷移ページと最新のユーザーのモーダルウィンドウ
     %ol.user_item
       = render @users

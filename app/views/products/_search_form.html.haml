@@ -1,5 +1,5 @@
 #product_search_form
-  %p 作品を検索
+  %h4 作品を検索
   = search_form_for @search do |f|
     .field
       = f.text_field :title_or_genre_cont, placeholder: "（例）  羅生門 タイトル or ジャンル"

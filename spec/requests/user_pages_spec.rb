@@ -48,8 +48,8 @@ describe "User pages" do
 
 
 
-        it { should have_selector("ol.user_item li div div a", text: "OTI2") }
-        it { should_not have_selector("ol.user_item li div div a", text: "OTI4" ) }
+        it { should have_selector("ol.user_item li div div.new_user_profile a", text: "OTI2") }
+        it { should_not have_selector("ol.user_item li div div.new_user_profile a", text: "OTI4" ) }
       end
     end
 

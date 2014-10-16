@@ -5,22 +5,13 @@ namespace :db do
   make_products
   make_microposts
   make_relationships
-=begin
-    User.create!(userid: "takayuki ochiai",
-                 email: "gogooti@gmail.com",
-                 nickname: "OTI",
-                 favorite_genre: "やる夫スレ",
-                 password: "suidenOTI",
-                 password_confirmation: "suidenOTI",
-                 admin: true)
-=end
   end
 end
 def make_users
   admin = User.create!(userid: "takayuki ochiai",
                        email: "gogooti@gmail.com",
                        nickname: "OTI",
-                       favorite_genre: "やる夫スレ",
+                       favorite_genre: "戦記",
                        password: "suidenOTI",
                        password_confirmation: "suidenOTI",
                        admin: true)
@@ -28,7 +19,7 @@ def make_users
     userid  = "exampleuser#{n+1}"
     email = "example-#{n+1}@railstutorial.jp"
     password  = "examplepass#{n+1}"
-    nickname = Faker::Name.name
+    nickname = "example-nickname#{n+1}"
     favorite_genre = "test"
     User.create!(userid: userid,
                  email: email,
@@ -40,40 +31,40 @@ def make_users
 end
 
 def make_products
-  60.times do |n|
-    title = "やる夫は~#{n+1}"
-    case n/16
-      when 1
+  64.times do |n|
+    title = "小説サンプル No.#{n+1}"
+    case n+1
+      when 1..4
         genre = "文学"
-      when 2
+      when 5..8
         genre = "恋愛"
-      when 3
+      when 9..12
         genre = "歴史"
-      when 4
+      when 13..16
         genre = "推理"
-      when 5
+      when 17..20
         genre = "ファンタジー"
-      when 6
+      when 21..24
         genre = "SF"
-      when 7
+      when 25..28
         genre = "ホラー"
-      when 8
+      when 29..32
         genre = "コメディ"
-      when 9
+      when 33..36
         genre = "冒険"
-      when 10
+      when 37..40
         genre = "学園"
-      when 11
+      when 41..44
         genre = "戦記"
-      when 12
+      when 45..48
         genre = "童話"
-      when 13
+      when 49..52
         genre = "詩"
-      when 14
+      when 53..56
         genre = "エッセイ"
-      when 15
+      when 57..60
         genre = "リプレイ"
-      when 0
+      when 61..64
         genre = "その他"
     end
     link = "http://www.yahoo.co.jp/#{n+1}"
@@ -89,7 +80,7 @@ def make_microposts
     first_product = products.first
     second_product = products.second
     user = n+1 #要訂正
-    content = "Create #{n+1} minutes ago"
+    content = "Sample micropost No.#{n+1}"
     created_time = (n+1).minute.ago
     Micropost.create!(content: content, user_id: user, product_id: first_product.id, created_at: created_time)
     Micropost.create!(content: content, user_id: user, product_id: second_product.id, created_at: created_time)

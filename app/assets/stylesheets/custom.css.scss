@@ -232,7 +232,6 @@ ul{
 /* micropost feed*/
 .microposts {
   .feed_item{
-    height:auto;
     position: relative;
     margin-left: 15px;
     margin-bottom: 10px;
@@ -243,10 +242,10 @@ ul{
     .right_content{
       position: relative;
       .content{
-        height: 100px;
         top: 15px;
         padding-left: 10px;
         overflow: hidden;
+        margin-bottom: 50px;
       }
       .likes_block{
         position: absolute;

@@ -42,12 +42,19 @@ describe User do
       it { should be_admin }
     end
   end
-  context "without password" do
+  context "without password is invalid" do
 
     let(:user){ User.new(userid: "Example", email: "suidenOTI@gmail.com",
-                                password:"",password_confirmation:"") }
+                                nickname: "oti", password:"",password_confirmation:"") }
     it { should_not be_valid}
     it { should respond_to(:authenticate) }
+  end
+
+  #emailがない時検証失敗する
+  context "without email is invalid" do
+    User.new(userid: "Example", email: "",
+                                nickname: "oti", password:"password",password_confirmation:"password")
+    it { should_not be_valid }
   end
 
   describe "return value of authenticate method" do

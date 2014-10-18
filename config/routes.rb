@@ -5,10 +5,13 @@ Labohp::Application.routes.draw do
   #ユーザー登録用リソース
   resources :users do
     member do
-      get :following, :followers
+      get :following, :followers, :activate
+    end
+    collection do
+      get :thanks_for_signup
     end
   end
-
+  match "/introduction", to: "main_pages#introduction", via: "get"
   match "/signup", to: "users#new", via: "get"
   #サインイン用リソースとルーティング
   resources :sessions, only: [:new, :create, :destroy]

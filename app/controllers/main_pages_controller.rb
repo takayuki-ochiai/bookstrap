@@ -8,4 +8,8 @@ class MainPagesController < ApplicationController
       @feed_items = Micropost.paginate(page: params[:page])
     end
   end
+
+  def introduction
+    render layout: "no_side"
+  end
 end

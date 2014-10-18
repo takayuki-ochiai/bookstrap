@@ -181,11 +181,18 @@ describe "User pages" do
 
       context "after saving the user" do
         before { click_button submit }
-        let(:user) { User.find_by(nickname: 'OTI') }
-
+        let!(:user) { User.find_by(nickname: 'OTI') }
+        it { should have_title("ご登録ありがとうございました")}
+        it { shoule have_content("まだ登録は完了しておりません。")}
         it { should have_link(logout, href:signout_path) }
-        it { should have_title(user.nickname) }
-        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+        #メールで送信されたアクティベーションリンクを踏むと登録完了
+        context "access activation link" do
+          before { visit activation_user_path(user.id) }
+          it { should have_title("アカウント登録完了") }
+          it { should have_content("アカウントの作成に成功しました!")}
+          #TODO: signin済みの状態にしておく
+        end
+        #TODO: メールで送られたアドレスを見ずに手あたり次第ルーティング狙われるとやばい。うまい手を考えること。
       end
     end
   end

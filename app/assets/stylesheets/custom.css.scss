@@ -64,7 +64,9 @@ ul{
   border-radius: 2px;
 }
 
-
+.text-center{
+  text-align: center;
+}
 
 
 /* home */
@@ -127,8 +129,23 @@ ul{
   }
 }
 
+/* introduction_page */
+#introduction_page{
+  p{
+    font-size: 16px;
+  }
+  div{
+    border-bottom: 2px solid $gray-lighter;
+    padding: 40px 0px 40px 0px;
+  }
+  h4{
+    border: none;
+  }
+}
 
-
+.top-padding-added{
+  padding-top: 20px;
+}
 
 
 /* header */

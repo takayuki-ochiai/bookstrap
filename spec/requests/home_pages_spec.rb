@@ -62,4 +62,10 @@ describe "HomePages" do
       it { should have_button("投稿内容の管理はこちら") }
     end
   end
+
+  describe "introduction page" do
+    before { visit introduction_path }
+    it { should have_title("Bookstrapとは") }
+    it { should have_content("Bookstrapは") }
+  end
 end

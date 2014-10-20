@@ -1,9 +1,7 @@
 class ProductsController < ApplicationController
-
   before_action :signed_in_user, only: [:new, :create, :edit, :update, :destroy, :create_micropost]
-  before_action :admin_user, only: [:destroy, :edit, :update]
-  before_action :set_product, only: [:show, :edit, :update, :create_micropost]
-
+  before_action :admin_user,     only: [:destroy, :edit, :update]
+  before_action :set_product,    only: [:show, :edit, :update, :create_micropost]
 
   #ransackを使って作品を検索した後、ページネーションを使用
   def index
@@ -16,10 +14,8 @@ class ProductsController < ApplicationController
     @products = @search.result.paginate(page: params[:page])
   end
 
-  #micropost投稿用の空の器を作成し@micropostに
-  #TODO: current_user.microposts.buildはわかりにくいので直す
+
   def show
-    @micropost = current_user.microposts.build if signed_in?
     render layout: "no_side"
   end
 
@@ -30,17 +26,14 @@ class ProductsController < ApplicationController
   def create
     @product=Product.new(product_params)
     if @product.save
-      #保存成功の場合
       flash[:success] = "作品の登録に成功しました！"
       redirect_to create_micropost_product_path(@product.id)
     else
-      #失敗の場合
       render "new"
     end
   end
 
   def edit
-    
   end
 
   def update
@@ -58,7 +51,7 @@ class ProductsController < ApplicationController
     redirect_to products_url
   end
 
-  #マイクロポスト投稿機能
+  #マイクロポスト投稿ページ
   def create_micropost
     @micropost = current_user.microposts.build if signed_in?
   end

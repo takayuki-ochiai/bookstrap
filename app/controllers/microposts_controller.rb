@@ -1,7 +1,10 @@
 class MicropostsController < ApplicationController
   before_action :signed_in_user, only: [:create, :edit, :destroy, :likes, :dislikes]
-  before_action :correct_user, only: [:edit, :destroy]
-  before_action :set_micropost, only: [:edit, :update, :likes, :dislikes]
+
+  #投稿作成者かadmin権限がある場合、削除が可能になる
+  before_action :correct_user,   only: [:edit, :destroy]
+
+  before_action :set_micropost,  only: [:edit, :update, :likes, :dislikes]
 
   def index
   end
@@ -45,15 +48,6 @@ class MicropostsController < ApplicationController
       format.html {redirect_to :back}
       format.js
     end
-=begin
-    @value = params[:type]
-    @micropost = Micropost.find(params[:id])
-    if @value == "up"
-      @micropost.add_evaluation(:likes, 1, current_user)
-    else
-      @micropost.delete_evaluation(:likes, current_user)
-    end
-=end
   end
 
   def dislikes
@@ -67,19 +61,17 @@ class MicropostsController < ApplicationController
   end
 
   private
-
     def micropost_params
       params.require(:micropost).permit(:content, :product_id, :user_id)
     end
 
-    #投稿作成者かadminである場合、削除が可能になる
     def correct_user
       @micropost = Micropost.find_by(id: params[:id])
       unless current_user.admin? || current_user?(@micropost.user)
         redirect_to root_path
       end
     end
-    #TODO: いいね用のparamsを作ってbeforeactionする必要あり？
+
     def set_micropost
       @micropost = Micropost.find(params[:id])
     end

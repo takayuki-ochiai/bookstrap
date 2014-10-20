@@ -1,5 +1,4 @@
 module SessionsHelper
-
   def sign_in(user)
     remember_token = User.new_remember_token#記憶トークンを作成してremember_tokenに格納
     cookies.permanent[:remember_token] = remember_token#自動的に期限を20年後にするクッキーの記憶トークンキーにremember_tokenを格納

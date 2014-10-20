@@ -29,6 +29,9 @@ describe User do
     it { should respond_to(:follow!) }
     it { should respond_to(:reverse_relationships) }
     it { should respond_to(:followers) }
+    it { should respond_to(:status) }
+    it { should respond_to(:active?) }
+    it { should respond_to(:inactive?) }
 
     it { should be_valid }
     it { should_not be_admin }
@@ -52,8 +55,8 @@ describe User do
 
   #emailがない時検証失敗する
   context "without email is invalid" do
-    User.new(userid: "Example", email: "",
-                                nickname: "oti", password:"password",password_confirmation:"password")
+    let(:user){ User.new(userid: "Example", email: "",
+                                nickname: "oti", password:"password",password_confirmation:"password") }
     it { should_not be_valid }
   end
 

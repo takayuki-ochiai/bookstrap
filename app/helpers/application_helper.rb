@@ -4,7 +4,6 @@ module ApplicationHelper
   end
 
   private
-
     def wrap_long_string(text, max_width = 30)
       zero_width_space = "&#8203;"
       regex = /.{1,#{max_width}}/

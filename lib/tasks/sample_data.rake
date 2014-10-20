@@ -14,19 +14,21 @@ def make_users
                        favorite_genre: "戦記",
                        password: "suidenOTI",
                        password_confirmation: "suidenOTI",
-                       admin: true)
+                       admin: true,
+                       status: "active" )
   99.times do |n|
     userid  = "exampleuser#{n+1}"
     email = "example-#{n+1}@railstutorial.jp"
     password  = "examplepass#{n+1}"
     nickname = "example-nickname#{n+1}"
-    favorite_genre = "test"
+    favorite_genre = "恋愛"
     User.create!(userid: userid,
                  email: email,
                  nickname: nickname,
                  favorite_genre: favorite_genre,
                  password: password,
-                 password_confirmation: password)
+                 password_confirmation: password,
+                 status: "active" )
   end
 end
 

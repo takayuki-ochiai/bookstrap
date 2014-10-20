@@ -7,20 +7,18 @@ class User < ActiveRecord::Base
                                    class_name:  "Relationship",
                                    dependent:   :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
-  #email関連の登録機能はコメントアウト中
-  #before_save { self.email = email.downcase }
+  has_many :evaluations, class_name: "ReputationSystem::Evaluation", as: :source
+
+  before_save { self.email = email.downcase }
   before_save { self.userid = userid.downcase }
   before_create :create_remember_token
 
-  #検証項目 
   validates :userid,
     presence: true,
     uniqueness: {case_sensitive: true},
     length: {in: 1..20}
-
-
-
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
   validates :email,
     presence: true,
     uniqueness: {case_sensitive: true },
@@ -32,12 +30,26 @@ class User < ActiveRecord::Base
     uniqueness: {case_sensitive: true },
     length: { maximum:20 }
 
-
     has_secure_password
     validates :password,
-      length:{ minimum:6 , maximum:30 }
+      length:{ minimum:6 , maximum:30 }, :if => :validate_password?
+    def validate_password?
+      password.present? || password_confirmation.present?
+    end#アカウントのアクティベーション時のパスワード認証の回避。
+    #TODO: 意味を調べて理解しておくこと！
 
-    has_many :evaluations, class_name: "ReputationSystem::Evaluation", as: :source
+  state_machine :status, :initial => :inactive do
+    state :active
+    state :inactive
+
+    event :activate do
+      transition :inactive => :active
+    end
+
+    event :inactivate do
+      transition :active => :inactive
+    end
+  end
 
   def User.new_remember_token
     SecureRandom.urlsafe_base64

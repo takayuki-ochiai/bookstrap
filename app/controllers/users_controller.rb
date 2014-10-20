@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: :show
+  before_action :set_user,       only: [:show, :activate]
   before_action :signed_in_user, only: [:edit, :update, :destroy, :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user, only: :destroy
-
+  before_action :admin_user,     only: :destroy
+  #before_action :activate_user, only: :activate
   def index
     @search = User.search(params[:q])
     @users = @search.result.paginate(page: params[:page])
@@ -17,7 +17,6 @@ class UsersController < ApplicationController
     render layout: "no_side"
   end
 
-
   def create
     #ビューから送られてきたデータがparamsに入っているので
     #これを元に新しいレコードを作成
@@ -26,7 +25,7 @@ class UsersController < ApplicationController
       #保存成功の場合
       sign_in @user#この行で登録成功の場合自動ログインさせている
       flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      redirect_to thanks_for_signup_users_path
     else
       #失敗の場合
       render "new"
@@ -65,6 +64,13 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  def thanks_for_signup
+  end
+
+  def activate
+    render @user.activate ? 'activation_successed' : 'activation_failed'
+  end
+
   private
     def user_params
       params.require(:user).permit(:id, :userid, :email, :password, :password_confirmation, :nickname, :introduction, :favorite_genre)
@@ -79,10 +85,4 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       redirect_to(root_path) unless current_user?(@user)
     end
-
-=begin
-    def admin_user
-      redirect_to(root_path) unless current_user.admin?
-    end
-=end
 end

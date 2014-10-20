@@ -4,10 +4,11 @@ FactoryGirl.define do
     sequence(:userid){ |n| "takayuki ochiai#{n}"}
     sequence(:email){ |n| "gogooti#{n}@gmail.com"}
     sequence(:nickname){ |n| "OTI#{n}"}
-    favorite_genre "やる夫スレ"
+    favorite_genre "戦記"
     sequence(:password) { |n|"suidenOTI#{n}" }
     sequence(:password_confirmation) { |n| "suidenOTI#{n}" }
-    
+    status :active #state_machineによる認証を通った状態で作成する。stateはキーで入れないと無効。
+
     factory :admin do
       admin true
     end
@@ -17,9 +18,10 @@ FactoryGirl.define do
     sequence(:userid){ |n| "suiden ochiai#{n}"}
     sequence(:email){ |n| "susumeoti#{n}@gmail.com"}
     nickname "OTI-2"
-    favorite_genre "やる夫スレ"
+    favorite_genre "恋愛"
     sequence(:password) { |n|"susumeOTI#{n}" }
     sequence(:password_confirmation) { |n| "susumeOTI#{n}" }
+    status :active
   end
   
   factory :micropost do

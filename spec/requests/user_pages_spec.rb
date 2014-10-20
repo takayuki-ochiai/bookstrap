@@ -38,17 +38,15 @@ describe "User pages" do
 
     describe "search function" do
       let(:search){ "検索" }
-      before(:all){ 30.times{ create(:user) } }
-      after(:all){ User.delete_all }
       context "title search" do
+        before(:all){ 30.times{ create(:user) } }
+        after(:all){ User.delete_all }
         before do 
           fill_in "ユーザー名で検索", with: "OTI2"
           click_button search
         end
 
-
-
-        it { should have_selector("ol.user_item li div div.new_user_profile a", text: "OTI2") }
+        it { should have_selector("ol.user_item li div.new_user_profile a", text: "OTI2") }
         it { should_not have_selector("ol.user_item li div div.new_user_profile a", text: "OTI4" ) }
       end
     end
@@ -66,7 +64,7 @@ describe "User pages" do
 
         it "should delete other user account" do
           expect do
-            click_link(delete_link, match: :first)
+            click_link("アカウント削除", match: :first)
           end.to change(User, :count).by(-1)
         end
 
@@ -169,8 +167,9 @@ describe "User pages" do
 
     context "with valid information" do
       before do
-        fill_in userid,         with: "Example User"
-        fill_in nickname,         with: "OTI"
+        fill_in userid,             with: "ExampleUser"
+        fill_in nickname,           with: "OTI"
+        fill_in "Eメール",            with: "gogooti@gmail.com"
         fill_in "パスワード",          with: "noukoudaigaku"
         fill_in "パスワード（確認）",     with: "noukoudaigaku"
       end
@@ -181,18 +180,35 @@ describe "User pages" do
 
       context "after saving the user" do
         before { click_button submit }
-        let!(:user) { User.find_by(nickname: 'OTI') }
         it { should have_title("ご登録ありがとうございました")}
-        it { shoule have_content("まだ登録は完了しておりません。")}
-        it { should have_link(logout, href:signout_path) }
+        it { should have_content("まだ登録は完了しておりません。")}
         #メールで送信されたアクティベーションリンクを踏むと登録完了
+        pending "アクティベートのテスト。臨時に別のテストを下記に作成" do
         context "access activation link" do
-          before { visit activation_user_path(user.id) }
+          let(:user){ User.find_by(userid: "ExampleUser") }
+          before { visit activate_user_path(user) }
           it { should have_title("アカウント登録完了") }
           it { should have_content("アカウントの作成に成功しました!")}
-          #TODO: signin済みの状態にしておく
+          context "moreover user sign in" do
+            before { sign_in user }
+            it { should_have title("ホーム")}
+          end
+        end
         end
         #TODO: メールで送られたアドレスを見ずに手あたり次第ルーティング狙われるとやばい。うまい手を考えること。
+      end
+
+      #臨時措置、上記で使用したユーザーとは異なるモデルを作成し、アクティベートさせてログインさせる
+      context "become activate user" do
+        let(:user){ create(:user, status: :inactive) }
+        before { sign_in user }
+        it { should_not have_title("ホーム") }
+        context " visit activation path" do
+          before { visit activate_user_path(user) }
+          it { should have_title("アカウント登録完了") }
+          it { should have_content("アカウントの作成に成功しました!") }
+          it { should_not have_content("アカウントの作成に失敗しました")}
+        end
       end
     end
   end
@@ -222,8 +238,10 @@ describe "User pages" do
     end
 
     describe "invalid user data" do
-      before { click_button "編集する"}
-
+      before do
+        fill_in userid, with: " "
+        click_button "編集する"
+      end
       it{ should have_content("error")}
     end
   end

@@ -1,0 +1,17 @@
+= "#{@user.nickname} さま"
+
+この度はBookstrapへユーザー登録を頂きましてありがとうございました。
+以下は登録いただいたユーザー情報です。
+
+ユーザーID(ログイン時に必要となります)
+= @user.userid
+パスワード
+セキュリティ保護のため、記述しておりません。
+メールアドレス
+= @user.email
+
+Bookstrapへのユーザー登録は完了しておりません。
+お手数ですが、以下のページへアクセスしてアカウントの有効化作業を行ってください。
+
+= url_for(host: "localhost:3000", controller: :users, action: :activate, id: @user.id) if Rails.env.development?
+= url_for(host: "fierce-bayou-4791.herokuapp.com", controller: :users, action: :activate, id: @user.id) if Rails.env.production?

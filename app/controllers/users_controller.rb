@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :signed_in_user, only: [:edit, :update, :destroy, :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
-  #before_action :activate_user, only: :activate
+
   def index
     @search = User.search(params[:q])
     @users = @search.result.paginate(page: params[:page])
@@ -23,8 +23,10 @@ class UsersController < ApplicationController
     @user=User.new(user_params)
     if @user.save
       #保存成功の場合
-      sign_in @user#この行で登録成功の場合自動ログインさせている
-      flash[:success] = "Welcome to the Sample App!"
+      user = @user
+      #@mailに格納したのはあとで結果画面などにメール情報を表示するとき利用するため
+      @mail = SignupMailer.sendmail_activate(user).deliver
+      flash[:success] = "登録確認メールを送信しました"
       redirect_to thanks_for_signup_users_path
     else
       #失敗の場合

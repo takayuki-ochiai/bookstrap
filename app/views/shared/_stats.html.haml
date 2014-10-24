@@ -1,11 +1,11 @@
 
 %ul.stats
   %li
-    %a{ href: following_user_path(@user) }
-      %strong#following.stat
-        ="フォロー  " + @user.followed_users.count.to_s
+    / %a{ href: following_user_path(@user) }
+    %strong#following.stat
+      ="フォロー  " + @user.followed_users.count.to_s
   %li
-    %a{ href: followers_user_path(@user) }
-      %strong#followers.stat
-        = "フォロワー  " + @user.followers.count.to_s
+    / %a{ href: followers_user_path(@user) }
+    %strong#followers.stat
+      = "フォロワー  " + @user.followers.count.to_s
 

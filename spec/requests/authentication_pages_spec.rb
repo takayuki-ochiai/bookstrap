@@ -9,6 +9,7 @@ describe "AuthenticationPages" do
   let(:profile){ "マイページ" }
   let(:edit_user){ "ユーザー情報管理" }
   let(:top){ "TOP" }
+  let(:usage){ "使い方" }
 
   describe "SignIn page" do
     before { visit signin_path }
@@ -23,7 +24,7 @@ describe "AuthenticationPages" do
       it { should have_title("SignIn")}
       it { should have_selector("div.alert.alert-error", text: "Invalid")}
 
-      context "after visiting another page" do
+      context "after visiting another page" do 
         before { click_link top }
         it { should_not have_selector('div.alert.alert-error') }
       end
@@ -52,17 +53,18 @@ describe "AuthenticationPages" do
       before { sign_in user}
 
       it { should have_title("ホーム") }
-      it { should have_link(users, href: users_path) }
-      it { should have_link(profile , href: user_path(user))}
+      it { should have_link(usage,     href: introduction_path) }
+      it { should have_link(users,     href: users_path) }
+      it { should have_link(profile ,  href: user_path(user)) }
       it { should have_link(edit_user, href: edit_user_path(user)) }
-      it { should have_link(logout, href: signout_path) }
+      it { should have_link(logout,    href: signout_path) }
       it { should_not have_link(login, href: signin_path) }
 
         context "user signout" do
           before { click_link logout }
 
           it { should_not have_title(user.nickname) }
-          it { should_not have_link(profile, href: user_path(user))}
+          it { should_not have_link(profile, href: user_path(user)) }
           it { should_not have_link(edit_user, href: edit_user_path(user)) }
           it { should_not have_link(logout, href: signout_path) }
           it { should have_link(login , href: signin_path) }
@@ -92,7 +94,7 @@ describe "AuthenticationPages" do
             end
 
             context "return signin page" do
-              before { delete micropost_path(FactoryGirl.create(:micropost)) }
+              before { delete micropost_path(create(:micropost)) }
               specify { expect(response).to redirect_to(signin_path) }
             end
           end

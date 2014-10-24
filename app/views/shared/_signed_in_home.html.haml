@@ -7,7 +7,7 @@
 - else
   #follower_micropost
     %h4 フォロー中ユーザーの投稿はありません
-- if @feed_items.any?
+- if @recent_feed_items.any?
   #recent_micropost
     %h4 最近投稿された感想
     = render "shared/recent_feed"

@@ -26,7 +26,8 @@ FactoryGirl.define do
   
   factory :micropost do
     content "Lorem ipsum"
-    user
+    #user
+    sequence(:user_id){ |n| n }
     sequence(:product_id){ |n| n }
     #product
   end
@@ -34,7 +35,7 @@ FactoryGirl.define do
   factory :product do
     sequence(:title) do |n|
       if n%2==0
-        "#{n}やる夫は~"
+        "小説#{n}"
       else
         "#{n}テスト"
       end

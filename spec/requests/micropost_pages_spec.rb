@@ -3,14 +3,23 @@ require 'spec_helper'
 describe "micropost_pages" do
   subject { page }
   let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
   let(:product) { create(:product) }
-  let(:micropost){ create(:micropost) }
+  let(:product2) { create(:product) }
+  let(:product3) { create(:product) }
+
+  #userが２つの投稿を行った状態でTOPに遷移
   before do
+    user.microposts.create(content: "test", product_id: product.id)
+    user.microposts.create(content: "test", product_id: product2.id)
+    other_user.follow!(user)
+    other_user.microposts.create(content: "test", product_id: product.id)
+    other_user.microposts.create(content: "test", product_id: product2.id)
     sign_in user
     visit root_path
-    10.times { create(:micropost) }
   end
 
+  #マイクロポストが表示される
   it "should render micropost feed" do
     user.feed.each do |item|
       expect(page).to have_selector("li##{item.id}", text: item.content)
@@ -18,8 +27,8 @@ describe "micropost_pages" do
   end
   
   context "edit micropost" do
-    let(:micropost){create(:micropost, user_id: user.id, product_id: product.id)}
-    before { visit edit_micropost_path(micropost) }
+    #micropost = create(:micropost, user_id: user, product_id: product)
+    before { visit edit_micropost_path(user.microposts.first) }
     it { should have_title("感想を編集する")}
     context "update invalid micropost" do
       before do
@@ -31,60 +40,51 @@ describe "micropost_pages" do
     
 
     context "edit valid micropost" do
-      pending "目視では正常動作を確認" do
-      let(:new_content){ "てすとだよ" }
+      let(:new_content){ "test" }
       before do
         fill_in "投稿内容", with: new_content
         click_button "編集する"
       end
-      specify { expect(micropost.reload.content).to eq new_content }
-      end
+      specify { expect(user.microposts.first.reload.content).to eq new_content }
+      #titleがないと言われる。おそらく架空のidを入れてるからマイクロポストが参照できていない
     end
   end
 
-  pending "正確なテストが作れていない。手動では確認済み" do
   #TODO: activerecord reputationで適用できるテストの作成
   describe "good toggle buttons " do
-    pending "正常に動作しないため保留中"
     context "visit root path" do
       #TODO: 同じ人が二回以上マイクロポストにいいねができないようなテスト
-      let(:other_user) { create(:user) }
-      before do
-        other_user.follow!(user)
-        create(:micropost, user: other_user)
-        visit root_path
-        sign_in user
-      end
-      pending "正常に動作しないため保留中"
+      #TODO:特定のマイクロポストを選択して、いいねボタンを押す。
+      #TODO:指定したマイクロポスト以外のいいねが増えていないことを確認する。
       it { should have_button "いいね！" }
-      pending "正常に動作しないため保留中"
+      #いいねボタンが表示されるマイクロポストの中でも一番上のものを押す。
       it "should increment the good count" do
         expect do
-          click_button "いいね！"
+          first(".likes_form").click_button "いいね！"
         end.to change(ReputationSystem::Evaluation, :count).by(1)
       end
 
-      pending "正常に動作しないため保留中"
       describe "toggling the button" do
-        before { click_button "いいね！" }
-        it { should have_xpath("//input[@value='down']") }
+        before { first(".likes_form").click_button "いいね！" }
+        it { should have_xpath("//button", text:"いいね！を削除") }
       end
     end
 
     context "cancel good for the micropost" do
       #すでにいいねをした状態である
-      before { click_button "いいね！" }
-      pending "正常に動作しないため保留中"
+      before do
+        other_user.microposts.first.add_evaluation(:likes, 1, user)
+        visit root_path
+      end
       it "should decrement the good count" do
         expect do
-          click_button "いいね！を取り消す"
+          first(".likes_form").click_button "いいね！を削除"
         end.to change(ReputationSystem::Evaluation, :count).by(-1)
       end
 
       describe "toggling the button" do
-        before{ click_button "いいね！を取り消す" }
-        pending "正常に動作しないため保留中"
-        it { should have_xpath("//input[@value='up']")}
+        before{ click_button "いいね！を削除" }
+        it { should have_xpath("//button", text:"いいね！")}
       end
     end
   end
@@ -93,16 +93,20 @@ describe "micropost_pages" do
     before { sign_out }
     describe "not signin user cannnot push good button" do
       describe "good_toggle buttons" do
-        it "should not increment the good count" do
-          expect do
-            click_button "いいね！"
-          end.not_to change(ReputationSystem::Evaluation, :count)
-        end
 
-        describe " require signin " do
-          # OPTIMIZE: いいねボタンを押すと登録画面への誘導が示されるほうがよいかもしれない
-          before { click_button "いいね！" }
-          specify { expect(response).to redirect_to(signin_path) }
+        it { should_not have_button("いいね！")}
+        pending "現在非ログイン中はいいねボタンを表示していないため保留" do
+          it "should not increment the good count" do
+            expect do
+              click_button "いいね！"
+            end.not_to change(ReputationSystem::Evaluation, :count)
+          end
+
+          describe " require signin " do
+            # OPTIMIZE: いいねボタンを押すと登録画面への誘導が示されるほうがよいかもしれない
+            before { click_button "いいね！" }
+            specify { expect(response).to redirect_to(signin_path) }
+          end
         end
       end
     end
@@ -116,13 +120,12 @@ describe "micropost_pages" do
 
       describe "require signin for no signin user destroy good action" do
         before do
-          micropost.add_evaluation(:likes, 1, user)
+          other_user.microposts.first.add_evaluation(:likes, 1, user)
           post likes_micropost_path(1) 
         end
         specify { expect(response).to redirect_to(signin_path) }
       end
     end
-  end
   end
 end
 

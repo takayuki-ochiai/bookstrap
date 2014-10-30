@@ -1,9 +1,6 @@
 class MicropostsController < ApplicationController
   before_action :signed_in_user, only: [:create, :edit, :destroy, :likes, :dislikes]
-
-  #投稿作成者かadmin権限がある場合、削除が可能になる
   before_action :correct_user,   only: [:edit, :destroy]
-
   before_action :set_micropost,  only: [:edit, :update, :likes, :dislikes]
 
   def index

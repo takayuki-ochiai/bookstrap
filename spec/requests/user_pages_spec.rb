@@ -6,6 +6,7 @@ describe "User pages" do
   let(:user){ create(:user) }
   let(:product){ create(:product) }
   let(:product2){ create(:product) }
+  let(:error) { "エラー" }
 
   #link text
   let(:delete_link){ "アカウント削除" }
@@ -238,7 +239,7 @@ describe "User pages" do
         fill_in userid, with: " "
         click_button "編集する"
       end
-      it{ should have_content("error")}
+      it{ should have_content(error)}
     end
   end
 

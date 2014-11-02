@@ -7,6 +7,7 @@ describe "micropost_pages" do
   let(:product) { create(:product) }
   let(:product2) { create(:product) }
   let(:product3) { create(:product) }
+  let(:error) { "エラー" }
 
   #userが２つの投稿を行った状態でTOPに遷移
   before do
@@ -35,7 +36,7 @@ describe "micropost_pages" do
         fill_in "投稿内容", with: " "
         click_button "編集する"
       end
-      it{ should have_content("error")}
+      it{ should have_content(error)}
     end
     
 

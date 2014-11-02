@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "作品CRUDページ" do
   subject { page }
   let(:user) { create(:user) }
+  let(:error) { "エラー" }
   before do 
     sign_in user
     visit root_path 
@@ -81,7 +82,7 @@ describe "作品CRUDページ" do
 
     describe "render error message" do
       before { click_button submit }
-      it { should have_content('error') }
+      it { should have_content(error) }
     end
 
     context "guest user" do
@@ -127,7 +128,7 @@ describe "作品CRUDページ" do
 
       describe "search function" do
         let(:select_genre){ "文学" }
-        let(:free_word){ "やる夫" }
+        let(:free_word){ "小説" }
         let(:search){ "検索" }
         let(:missmatch_word){ "テスト" }
         let(:missmatch_genre){ "恋愛" }
@@ -218,7 +219,7 @@ describe "作品CRUDページ" do
             click_button "編集する"
           end
 
-          it{ should have_content("error")}
+          it{ should have_content(error)}
         end
       end
     end

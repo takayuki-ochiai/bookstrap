@@ -1,19 +1,17 @@
 require "spec_helper"
 
 describe SignupMailer do
-  pending "メールテストはデフォルトのまま。これから作ります" do
   describe "sendmail_activate" do
-    let(:mail) { SignupMailer.sendmail_activate }
-
+    let(:user) { create(:user, email: "gogooti@gmail.com") }
+    let(:mail) { SignupMailer.sendmail_activate(user) }
     it "renders the headers" do
-      mail.subject.should eq("Sendmail activate")
-      mail.to.should eq(["to@example.org"])
-      mail.from.should eq(["from@example.com"])
+      mail.subject.should eq("Bookstrap登録確認")
+      mail.to.should eq(["gogooti@gmail.com"])
+      mail.from.should eq(["bookstrap.info@gmail.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("Hi")
+      mail.body.encoded.should match("この度はBookstrapへユーザー登録を頂きまして")
     end
-  end
   end
 end

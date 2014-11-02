@@ -7,10 +7,11 @@
     = csrf_meta_tags
   %body
     = render "layouts/header"
-    .container#main
+    .container
       - flash.each do |key, value|
         %div(class="alert alert-#{key}")
           = value
+    .container#main
       - if signed_in?
         #side-nav.heightLine
           %section#user_info

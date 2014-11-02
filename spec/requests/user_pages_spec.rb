@@ -39,17 +39,19 @@ describe "User pages" do
     describe "search function" do
       let(:search){ "検索" }
       context "title search" do
-        before(:all){ 30.times{ create(:user) } }
+        before(:all) do
+          30.times do |n| 
+            User.create(id: n, userid: "test#{n}", email: "test#{n}@gmail.com", nickname: "test#{n}", password: "password#{n}", password_confirmation: "password#{n}" )
+          end
+        end
         after(:all){ User.delete_all }
         before do 
-          fill_in "ユーザー名で検索", with: "OTI2"
+          fill_in "ユーザー名で検索", with: "test2"
           click_button search
         end
         #TODO:exampleがうまく書けていない。おそらくセレクタをうまく設定できていない
-        pending "ユーザー名検索。目視では確認済み" do 
-          it { should have_selector("ol.user_item li div.new_user_profile a", text: "OTI2") }
-          it { should_not have_selector("ol.user_item li div div.new_user_profile a", text: "OTI4" ) }
-        end
+        it { should have_selector("ol.user_item li div.new_user_profile a", text: "test2") }
+        it { should_not have_selector("ol.user_item li div div.new_user_profile a", text: "test4" ) }
       end
     end
 
@@ -180,27 +182,19 @@ describe "User pages" do
         expect { click_button submit }.to change(User, :count).by(1)
       end
 
+      it "should send a registration confirmation email to the new user" do
+        expect { click_button submit }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+
       context "after saving the user" do
         before { click_button submit }
         it { should have_title("ご登録ありがとうございました")}
         it { should have_content("まだ登録は完了しておりません。")}
-        #メールで送信されたアクティベーションリンクを踏むと登録完了
-        pending "アクティベートのテスト。臨時に別のテストを下記に作成" do
-        context "access activation link" do
-          let(:user){ User.find_by(userid: "ExampleUser") }
-          before { visit activate_user_path(user) }
-          it { should have_title("アカウント登録完了") }
-          it { should have_content("アカウントの作成に成功しました!")}
-          context "moreover user sign in" do
-            before { sign_in user }
-            it { should_have title("ホーム")}
-          end
-        end
-        end
         #TODO: メールで送られたアドレスを見ずに手あたり次第ルーティング狙われるとやばい。うまい手を考えること。
       end
 
       #臨時措置、上記で使用したユーザーとは異なるモデルを作成し、アクティベートさせてログインさせる
+      #アクティベーションリンクを踏むと登録完了
       context "become activate user" do
         let(:user){ create(:user, status: :inactive) }
         before { sign_in user }

@@ -30,7 +30,7 @@ class UsersController < ApplicationController
       redirect_to thanks_for_signup_users_path
     else
       #失敗の場合
-      render "new"
+      render "new", layout: "no_side"
     end
   end
 

@@ -36,8 +36,8 @@ Labohp::Application.configure do
     :address => 'smtp.gmail.com',
     :port => 587,
     :domain => 'bookstrap.com',
-    :user_name => 'go.ahead.oti@gmail.com',
-    :password => 'zeqbybdqqdgmfsro',
+    :user_name => 'bookstrap.info@gmail.com',
+    :password => 'qptgnnzdqkrrklgs',
     :authentication => :plain,
     :enable_starttls_auto => true
   }

@@ -41,13 +41,14 @@ describe "micropost_pages" do
     
 
     context "edit valid micropost" do
-      let(:new_content){ "test" }
+      let(:new_content){ "test2" }
+      let(:old_content){ "test" }
       before do
         fill_in "投稿内容", with: new_content
         click_button "編集する"
       end
-      specify { expect(user.microposts.first.reload.content).to eq new_content }
-      #titleがないと言われる。おそらく架空のidを入れてるからマイクロポストが参照できていない
+      specify { expect(user.microposts.first.reload.content).to     eq new_content }
+      specify { expect(user.microposts.first.reload.content).not_to eq old_content }
     end
   end
 

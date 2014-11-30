@@ -16,7 +16,15 @@ class ProductsController < ApplicationController
 
 
   def show
-    render layout: "no_side"
+    @keyword = @product.title
+    Amazon::Ecs.debug = true
+    if @keyword.present?
+      @res = Amazon::Ecs.item_search(@keyword, :search_index => 'Books', :response_group => 'Medium')
+      render layout: "no_side"
+    else
+      return
+      render layout: "no_side"
+    end
   end
 
   def new

@@ -17,6 +17,7 @@ gem 'ransack'
 gem 'activerecord-reputation-system', github: 'NARKOZ/activerecord-reputation-system', branch: 'rails4'
 gem 'will_paginate-bootstrap'
 gem 'state_machine', '1.2.0'
+gem 'amazon-ecs'
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'

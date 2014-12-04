@@ -79,6 +79,11 @@ class User < ActiveRecord::Base
     evaluations.where(target_type: micropost.class, reputation_name: :likes, target_id: micropost.id).present?
   end
 
+  def wanna_read?(micropost)
+    product = micropost.product
+    evaluations.where(target_type: product.class, reputation_name: :wanna_read, target_id: product.id).present?
+  end
+
   private
     #記憶トークンの作成
     def create_remember_token

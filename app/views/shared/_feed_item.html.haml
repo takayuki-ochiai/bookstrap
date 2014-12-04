@@ -17,6 +17,10 @@
         = render partial: "microposts/likes_form", locals: {feed_item: feed_item }
         %span.likes{ id: feed_item.id }
           = "#{feed_item.reputation_for(:likes).to_i} いいね！"
+      %span.wanna_read_block
+        = render partial: "products/wanna_read_form", locals: {feed_item: feed_item }
+        %span.wanna_read{ class: feed_item.product.id }
+          = "#{feed_item.product.reputation_for(:wanna_read).to_i} 読みたい！"
       %span.delete_block
         - unless current_user == nil
           -if current_user == feed_item.user || current_user.admin?

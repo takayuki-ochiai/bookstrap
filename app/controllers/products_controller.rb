@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
-  before_action :signed_in_user, only: [:new, :create, :edit, :update, :destroy, :create_micropost]
+  before_action :signed_in_user, only: [:new, :create, :edit, :update, :destroy, :create_micropost, :wanna_read, :not_wanna_read]
   before_action :admin_user,     only: [:destroy, :edit, :update]
-  before_action :set_product,    only: [:show, :edit, :update, :create_micropost]
+  before_action :set_product,    only: [:show, :edit, :update, :create_micropost, :wanna_read, :not_wanna_read]
 
   #ransackを使って作品を検索した後、ページネーションを使用
   def index
@@ -13,7 +13,6 @@ class ProductsController < ApplicationController
     @search = Product.search(params[:q])#search_formから値を取得
     @products = @search.result.paginate(page: params[:page])
   end
-
 
   def show
     @keyword = @product.title
@@ -128,6 +127,24 @@ class ProductsController < ApplicationController
 
   def others
     genre_search("その他")
+  end
+
+  def wanna_read
+    @product.add_evaluation(:wanna_read, 1, current_user)
+    @wanna_read_num = @product.reputation_for(:wanna_read).to_i
+    respond_to do |format|
+      format.html {redirect_to :back}
+      format.js
+    end
+  end
+
+  def not_wanna_read
+    @product.delete_evaluation(:wanna_read, current_user)
+    @wanna_read_num = @product.reputation_for(:wanna_read).to_i
+    respond_to do |format|
+      format.html {redirect_to :back}
+      format.js
+    end
   end
 
   private

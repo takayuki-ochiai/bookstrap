@@ -300,6 +300,30 @@ ul{
           display: inline_block;
         }
       }
+      .wanna_read_block{
+        position: absolute;
+        bottom: 0px;
+        left: 180px;
+        .wanna_read_form{
+          display:inline-block;
+          left: 10px;
+          .btn-nav{
+            @extend .btn-primary !optional;
+            background-color: #3b5999;
+            border: 1px solid #3b5999;
+          }
+          .btn-white{
+            @extend .btn-default !optional;
+            span{
+              font-color: $gray-lighter;
+              font-weight: 500;
+            }
+          }
+        }
+        .wanna_read{
+          display: inline_block;
+        }
+      }
     }
     .delete_block{
       position: absolute;
@@ -641,6 +665,14 @@ section{
       position: absolute;
       right: 0px;
       top: 20px;
+    }
+    .image{
+      margin-left: 15px;
+    }
+    .link{
+      margin-bottom: 0px;
+      margin-left: 300px;
+      border: none;
     }
   }
   .microposts{

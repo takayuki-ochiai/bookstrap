@@ -1,0 +1,6 @@
+- unless current_user == nil
+  .wanna_read_form{ class: feed_item.product.id }
+    - if current_user.wanna_read?(feed_item)
+      = render partial: "products/not_wanna_read", locals: {product: feed_item.product}
+    - else
+      = render partial: "products/wanna_read", locals: {product: feed_item.product}

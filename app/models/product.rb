@@ -17,4 +17,6 @@ class Product < ActiveRecord::Base
     length: { maximum: 300 },
     allow_blank: true,
     format: URI::regexp(%w(http https))
+
+  has_reputation :wanna_read, source: :user, aggregated_by: :sum
 end

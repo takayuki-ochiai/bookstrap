@@ -35,7 +35,9 @@ Labohp::Application.routes.draw do
     end
     
     member do
-      get :create_micropost
+      get :create_micropost 
+      post :wanna_read
+      delete :not_wanna_read
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

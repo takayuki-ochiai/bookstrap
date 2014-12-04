@@ -3,10 +3,12 @@
   .product_info
     - if @res.present?
       - i = @res.items.first
-      %h2= link_to i.get('ItemAttributes/Title'), i.get('DetailPageURL')
-      = link_to i.get('DetailPageURL')  do
-        = image_tag i.get('MediumImage/URL')
-
+      %h3= i.get('ItemAttributes/Title')
+      .image
+        = link_to i.get('DetailPageURL')  do
+          = image_tag i.get('MediumImage/URL')
+      .link
+        %h3= link_to "書籍の詳細はこちら", i.get('DetailPageURL') 
     - else
       %h2 #{@product.title}
       %span
@@ -18,6 +20,7 @@
         = link_to "#{@product.link}", @product.link
       = button_to create_micropost_product_path(@product.id), method: :get, class: "btn btn-default" do
         感想を投稿する
+    
   %h4 #{@product.title}に関する感想
   .feed_items
     - if @microposts.any?

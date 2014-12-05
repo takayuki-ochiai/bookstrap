@@ -65,8 +65,13 @@ class ProductsController < ApplicationController
 
   #ジャンル別で表示する機能
   # TODO :ジャンル別表示のMVCがなんか冗長だからうまいやりかたを考えること
+
   def literature
-    genre_search("文学")
+    genre_search("文学・評論")
+  end
+
+  def computer
+    genre_search("コンピュータ・IT")
   end
 
   def love

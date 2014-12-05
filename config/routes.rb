@@ -29,9 +29,10 @@ Labohp::Application.routes.draw do
   
   resources :products do
     collection do
-      get :literature, :love, :history, :mystery, :fantasy, :sf,
-          :horror, :comedy, :adventure, :academy, :millitary,
-          :fairy_tail, :poem, :essay, :replay, :others,:search_product
+      #get :literature, :love, :history, :mystery, :fantasy, :sf,
+          #:horror, :comedy, :adventure, :academy, :millitary,
+          #:fairy_tail, :poem, :essay, :replay, :others,:search_product
+      get :computer, :literature
     end
     
     member do

@@ -1,15 +1,7 @@
 = provide :title, @product.title
 #product_show_page
   .product_info
-    - if @res.present?
-      - i = @res.items.first
-      %h3= i.get('ItemAttributes/Title')
-      .image
-        = link_to i.get('DetailPageURL')  do
-          = image_tag i.get('MediumImage/URL')
-      .link
-        %h3= link_to "書籍の詳細はこちら", i.get('DetailPageURL') 
-    - else
+    - if @res.nil?
       %h2 #{@product.title}
       %span
         ジャンル: #{@product.genre}
@@ -18,6 +10,16 @@
       %span
         URL: 
         = link_to "#{@product.link}", @product.link
+      = button_to create_micropost_product_path(@product.id), method: :get, class: "btn btn-default" do
+        感想を投稿する
+    - else
+      - i = @res.items.first
+      %h3= i.get('ItemAttributes/Title')
+      .image
+        = link_to i.get('DetailPageURL')  do
+          = image_tag i.get('MediumImage/URL')
+      .link
+        %h3= link_to "書籍の詳細はこちら", i.get('DetailPageURL') 
       = button_to create_micropost_product_path(@product.id), method: :get, class: "btn btn-default" do
         感想を投稿する
     
